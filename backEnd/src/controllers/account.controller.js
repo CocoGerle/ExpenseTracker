@@ -109,10 +109,41 @@ const deleteAllAccounts = async (req, res) => {
   }
 };
 
+const updateAccount = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedData = req.body;
+
+    const filePath = path.join(__dirname, "..", "data", "accounts.json");
+    const rawData = fs.readFileSync(filePath, "utf-8");
+    const accounts = JSON.parse(rawData);
+
+    const accountIndex = accounts.findIndex((account) => account.id === id);
+
+    if (accountIndex === -1) {
+      return res.status(404).json({ error: "Account not found" });
+    }
+
+    accounts[accountIndex] = { ...accounts[accountIndex], ...updatedData };
+    console.log(accounts[accountIndex], "aaaaaaaaaaaaaaaa");
+
+    fs.writeFileSync(filePath, JSON.stringify(accounts, null, 2));
+
+    res.json({
+      message: "Account successfully updated",
+      account: accounts[accountIndex],
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   getAllAccounts,
   createAccount,
   getAccount,
   deleteAccount,
   deleteAllAccounts,
+  updateAccount,
 };
