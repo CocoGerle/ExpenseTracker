@@ -2,10 +2,10 @@ const fs = require("fs");
 const path = require("path");
 const { v4 } = require("uuid");
 
-const getAllAccounts = async (req, res) => {
+const getAllRecords = async (req, res) => {
   console.log(req.body);
   try {
-    const filePath = path.join(__dirname, "..", "data", "accounts.json");
+    const filePath = path.join(__dirname, "..", "data", "addRecord.json");
 
     const rawData = fs.readFileSync(filePath);
 
@@ -18,10 +18,10 @@ const getAllAccounts = async (req, res) => {
   }
 };
 
-const createAccount = async (req, res) => {
+const createRecord = async (req, res) => {
   console.log(req.body);
   try {
-    const filePath = path.join(__dirname, "..", "data", "accounts.json");
+    const filePath = path.join(__dirname, "..", "data", "addRecord.json");
 
     const rawData = fs.readFileSync(filePath);
 
@@ -43,10 +43,10 @@ const createAccount = async (req, res) => {
   }
 };
 
-const getAccount = async (req, res) => {
+const getRecord = async (req, res) => {
   try {
     const { id } = req.params;
-    const filePath = path.join(__dirname, "..", "data", "accounts.json");
+    const filePath = path.join(__dirname, "..", "data", "addRecord.json");
 
     const rawData = fs.readFileSync(filePath);
     const accounts = JSON.parse(rawData);
@@ -64,11 +64,11 @@ const getAccount = async (req, res) => {
   }
 };
 
-const deleteAccount = async (req, res) => {
+const deleteRecord = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const filePath = path.join(__dirname, "..", "data", "accounts.json");
+    const filePath = path.join(__dirname, "..", "data", "addRecord.json");
     const rawData = fs.readFileSync(filePath, "utf-8");
     const accounts = JSON.parse(rawData);
 
@@ -89,10 +89,10 @@ const deleteAccount = async (req, res) => {
   }
 };
 
-const deleteAllAccounts = async (req, res) => {
+const deleteAllRecords = async (req, res) => {
   console.log(req.body);
   try {
-    const filePath = path.join(__dirname, "..", "data", "accounts.json");
+    const filePath = path.join(__dirname, "..", "data", "addRecord.json");
 
     const rawData = fs.readFileSync(filePath);
 
@@ -109,12 +109,12 @@ const deleteAllAccounts = async (req, res) => {
   }
 };
 
-const updateAccount = async (req, res) => {
+const updateRecord = async (req, res) => {
   try {
     const { id } = req.params;
     const updatedData = req.body;
 
-    const filePath = path.join(__dirname, "..", "data", "accounts.json");
+    const filePath = path.join(__dirname, "..", "data", "addRecord.json");
     const rawData = fs.readFileSync(filePath, "utf-8");
     const accounts = JSON.parse(rawData);
 
@@ -137,10 +137,10 @@ const updateAccount = async (req, res) => {
 };
 
 module.exports = {
-  getAllAccounts,
-  createAccount,
-  getAccount,
-  deleteAccount,
-  deleteAllAccounts,
-  updateAccount,
+  getAllRecords,
+  getRecord,
+  createRecord,
+  deleteAllRecords,
+  deleteRecord,
+  updateRecord,
 };

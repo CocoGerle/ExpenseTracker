@@ -2,7 +2,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -31,7 +31,7 @@ import { DatePickerDemo } from "./Date";
 import { RandomIcon } from "@/assets/icons/RandomIcon";
 import { RandomIcon2 } from "@/assets/icons/RandomIcon2";
 import { RandomIcon3 } from "@/assets/icons/RandomIcon3";
-
+import axios from "axios";
 
 const categories = [
   { title: "Food & Drinks" },
@@ -78,10 +78,11 @@ const colors = [
 const minValue = 0;
 const maxValue = 1000;
 
-export const Records = (bla) => {
+export const Records = () => {
   const [values, setValues] = useState([minValue, maxValue]);
   const [activeButton, setActiveButton] = useState("expense");
   const [bgColor, setBgColor] = useState("black");
+  const [records, setRecords] = useState({type: "", amount: "", date:""});
 
   const handleInputChange = (index, newValue) => {
     const newValues = [...values];
@@ -93,11 +94,17 @@ export const Records = (bla) => {
     setActiveButton(button);
   };
 
+  const createRecord = async () => {
+    const response = await axios.post(`http://localhost:3001/records`, records);
+    console.log(response.data);
+    
+    // setRecords({...records, response.data});
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-6">
         <h1 className="text-2xl font-semibold">Records</h1>
-
         <Dialog>
           <DialogTrigger className="bg-blue-600 text-white rounded-xl py-2 px-4">
             + Add
@@ -131,7 +138,12 @@ export const Records = (bla) => {
                   </div>
                   <div className="py-3 px-4 bg-gray-200 border rounded-lg mt-5">
                     <p>Amount</p>
-                    <h1 className="text-gray-500">₮ 000.00</h1>
+                    <Input
+                      className="text-gray-500"
+                      type="number"
+                      placeholder="₮ 000.00"
+                      onChange={(event) => setRecords({...records, amount: event.target.value})}
+                    />
                   </div>
                   <div className="w-full mt-5">
                     <h1 className="mb-1">Category</h1>
@@ -187,9 +199,10 @@ export const Records = (bla) => {
                   </div>
                   <div className="flex mt-5 w-[100%] gap-4">
                     <div className="w-[50%] flex flex-col">
-                      {/* <h1>Date</h1> */}
+                    
                       Date
-                      <DatePickerDemo />
+
+                      <DatePickerDemo/>
                     </div>
                     <div className="w-[50%] flex flex-col">
                       <label>Time</label>
@@ -201,6 +214,7 @@ export const Records = (bla) => {
                   </div>
                   <div className={`mt-[20px]`}>
                     <Button
+                      onClick={createRecord}
                       className={`bg-blue-600 text-white rounded-3xl w-full ${
                         activeButton === "income"
                           ? "bg-green-600 text-white z-10 rounded-l-3xl"
@@ -274,7 +288,7 @@ export const Records = (bla) => {
                 <div className="flex gap-[8px]">
                   <Select>
                     <SelectTrigger className="w-[20%]">
-                      <SelectValue  placeholder={RandomIcon2 } />
+                      <SelectValue placeholder={RandomIcon2} />
                     </SelectTrigger>
                     <SelectContent className="w-fit p-0 border">
                       <div className="grid grid-cols-5 gap-[24px]">

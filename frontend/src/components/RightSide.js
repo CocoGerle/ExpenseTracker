@@ -14,39 +14,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import axios from "axios";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Cards } from "./Cards";
-
-const data = [
-  {
-    title: "Lending & Renting",
-    date: "14:00",
-    amount: -1000,
-  },
-  {
-    title: "Food & Drinks",
-    time: "14:00",
-    amount: 1000,
-  },
-  {
-    title: "Food & Drinks",
-    time: "14:00",
-    amount: -1000,
-  },
-  {
-    title: "Food & Drinks",
-    time: "14:00",
-    amount: 1000,
-  },
-  {
-    title: "Food & Drinks",
-    time: "14:00",
-    amount: -1000,
-  },
-];
+import { useState, useEffect } from "react";
 
 export const RightSide = () => {
+  const [records, setRecords] = useState([{}]);
+  useEffect(() => {
+    const getData = async () => {
+      const response = await axios.get("http://localhost:3001/records");
+      setRecords(response.data);
+    };
+    getData();
+  }, []);
   return (
     <div>
       <div className=" pt-[48px] pb-[16px] pl-[24px] flex justify-between ">
@@ -87,17 +69,14 @@ export const RightSide = () => {
         <div className="flex flex-col gap-3 ">
           <div className="text-[16px] font-semibold">Today</div>
           <div className="flex flex-col gap-3 ">
-            {data.map((item) => (
-              <Cards title={item.title} date={item.date} amount={item.amount} />
+            {records.map((item) => (
+             <Cards amount={item.amount} date={item.date}></Cards>
             ))}
           </div>
         </div>
         <div className="flex flex-col gap-3 ">
           <div className="text-[16px] font-semibold">Yesterday</div>
           <div className="flex flex-col gap-3 ">
-            {data.map((item) => (
-              <Cards title={item.title} date={item.date} amount={item.amount} />
-            ))}
           </div>
         </div>
       </div>
