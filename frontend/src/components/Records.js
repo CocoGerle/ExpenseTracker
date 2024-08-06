@@ -2,9 +2,10 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -19,19 +20,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { AddCategory } from "@/assets/icons/AddCategory";
-import { Home } from "@/assets/icons/Home";
-import { GiftIcon } from "@/assets/icons/GiftIcon";
-import { Food } from "@/assets/icons/Food";
-import { WineIcon } from "@/assets/icons/WineIcon";
-import { TaxiIcon } from "@/assets/icons/TaxiIcon";
-import { ShoppingIcon } from "@/assets/icons/ShoppingIcon";
+// import { AddCategory } from "@/assets/icons/AddCategory";
+// import { Home } from "@/assets/icons/Home";
+// import { GiftIcon } from "@/assets/icons/GiftIcon";
+// import { Food } from "@/assets/icons/Food";
+// import { WineIcon } from "@/assets/icons/WineIcon";
+// import { TaxiIcon } from "@/assets/icons/TaxiIcon";
+// import { ShoppingIcon } from "@/assets/icons/ShoppingIcon";
 import { Textarea } from "@/components/ui/textarea";
 import { DatePickerDemo } from "./Date";
 import { RandomIcon } from "@/assets/icons/RandomIcon";
 import { RandomIcon2 } from "@/assets/icons/RandomIcon2";
 import { RandomIcon3 } from "@/assets/icons/RandomIcon3";
 import axios from "axios";
+import { RecordContext } from "./utils/context";
+import * as IconsPi from "react-icons/pi";
+import * as IconsFa from "react-icons/fa";
 
 const categories = [
   { title: "Food & Drinks" },
@@ -47,7 +51,7 @@ const categories = [
   { title: "Others" },
 ];
 
-const icons = [
+const icons1 = [
   { icon: RandomIcon },
   { icon: RandomIcon2 },
   { icon: RandomIcon3 },
@@ -82,7 +86,8 @@ export const Records = () => {
   const [values, setValues] = useState([minValue, maxValue]);
   const [activeButton, setActiveButton] = useState("expense");
   const [bgColor, setBgColor] = useState("black");
-  const [records, setRecords] = useState({type: "", amount: "", date:""});
+  const [records, setRecords] = useState([{}]);
+  const { record, setRecord } = useContext(RecordContext);
 
   const handleInputChange = (index, newValue) => {
     const newValues = [...values];
@@ -94,11 +99,16 @@ export const Records = () => {
     setActiveButton(button);
   };
 
+  useEffect(() => {
+    const getData = async () => {
+      const response = await axios.get("http://localhost:3001/records");
+      setRecords(response.data);
+    };
+    getData();
+  }, []);
+
   const createRecord = async () => {
-    const response = await axios.post(`http://localhost:3001/records`, records);
-    console.log(response.data);
-    
-    // setRecords({...records, response.data});
+    const response = await axios.post(`http://localhost:3001/records`, record);
   };
 
   return (
@@ -121,7 +131,10 @@ export const Records = () => {
                           ? "bg-blue-600 text-white"
                           : "bg-gray-200 rounded-r-none"
                       }`}
-                      onClick={() => handleButtonClick("expense")}
+                      onClick={() => {
+                        handleButtonClick("expense"),
+                          setRecord({ ...record, type: "exp" });
+                      }}
                     >
                       Expense
                     </div>
@@ -131,7 +144,10 @@ export const Records = () => {
                           ? "bg-green-600 text-white z-10 rounded-l-3xl"
                           : "bg-gray-200"
                       }`}
-                      onClick={() => handleButtonClick("income")}
+                      onClick={() => {
+                        handleButtonClick("income"),
+                          setRecord({ ...record, type: "inc" });
+                      }}
                     >
                       Income
                     </div>
@@ -142,98 +158,110 @@ export const Records = () => {
                       className="text-gray-500"
                       type="number"
                       placeholder="₮ 000.00"
-                      onChange={(event) => setRecords({...records, amount: event.target.value})}
+                      onChange={(event) =>
+                        setRecord({ ...record, amount: event.target.value })
+                      }
                     />
                   </div>
                   <div className="w-full mt-5">
                     <h1 className="mb-1">Category</h1>
-                    <Select>
+                    <Select
+                      value={record.category.name}
+                      onValueChange={(event) =>
+                        setRecord({
+                          ...record,
+                          category: { ...record.category, name: event },
+                        })
+                      }
+                    >
                       <SelectTrigger className="">
                         <SelectValue placeholder="Choose" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="addCategory">
-                          <div className="flex justify-around gap-3">
-                            <AddCategory />
-                            <h1>Add Category</h1>
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="home">
-                          <div className="flex gap-3">
-                            <Home />
-                            <h1>Home</h1>
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="gift">
-                          <div className="flex gap-3">
-                            <GiftIcon />
-                            <h1>Gift</h1>
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="food">
-                          <div className="flex gap-3">
-                            <Food />
-                            <h1>Food</h1>
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="drink">
-                          <div className="flex gap-3">
-                            <WineIcon />
-                            <h1>Drink</h1>
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="taxi">
-                          <div className="flex gap-3">
-                            <TaxiIcon />
-                            <h1>Taxi</h1>
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="shopping">
-                          <div className="flex gap-3">
-                            <ShoppingIcon />
-                            <h1>Shopping</h1>
-                          </div>
-                        </SelectItem>
+                        {records?.map((item) => {
+                          const IconComponent = IconsFa[item.category?.img];
+
+                          return (
+                            <SelectItem
+                              key={item.name}
+                              value={item.category?.name}
+                            >
+                              <div className="flex justify-around gap-3">
+                                <IconComponent
+                                  size="24px"
+                                  color={item.category?.color}
+                                />
+                                <h1>{item.category?.name}</h1>
+                              </div>
+                            </SelectItem>
+                          );
+                        })}
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="flex mt-5 w-[100%] gap-4">
                     <div className="w-[50%] flex flex-col">
-                    
                       Date
-
-                      <DatePickerDemo/>
+                      <input
+                        type="date"
+                        placeholder="date"
+                        value={record.date}
+                        onChange={(event) =>
+                          setRecord({ ...record, date: event.target.value })
+                        }
+                      />
                     </div>
                     <div className="w-[50%] flex flex-col">
                       <label>Time</label>
                       <input
                         type="time"
+                        placeholder="time"
                         className="border rounded-md py-[6px] px-[8px]"
+                        value={record.time}
+                        onChange={(event) =>
+                          setRecord({ ...record, time: event.target.value })
+                        }
                       />
                     </div>
                   </div>
                   <div className={`mt-[20px]`}>
-                    <Button
-                      onClick={createRecord}
-                      className={`bg-blue-600 text-white rounded-3xl w-full ${
-                        activeButton === "income"
-                          ? "bg-green-600 text-white z-10 rounded-l-3xl"
-                          : "bg-blue-600"
-                      }`}
-                    >
-                      Add Records
-                    </Button>
+                    <DialogClose>
+                      <Button
+                        onClick={createRecord}
+                        className={`bg-blue-600 text-white rounded-3xl w-full ${
+                          activeButton === "income"
+                            ? "bg-green-600 text-white z-10 rounded-l-3xl"
+                            : "bg-blue-600"
+                        }`}
+                      >
+                        Add Records
+                      </Button>
+                    </DialogClose>
                   </div>
                 </div>
 
                 <div className="w-96 py-5 px-6 h-fit">
                   <div>
                     <div className="mb-2">Payee</div>
-                    <Input type="text" placeholder="Write here" />
+                    <Input
+                      type="text"
+                      placeholder="Write here"
+                      value={record.payee}
+                      onChange={(event) =>
+                        setRecord({ ...record, payee: event.target.value })
+                      }
+                    />
                   </div>
                   <div>
                     <div className="mt-5 mb-2">Note</div>
-                    <Textarea className="h-60" placeholder="Write here" />
+                    <Textarea
+                      className="h-60"
+                      placeholder="Write here"
+                      value={record.note}
+                      onChange={(event) =>
+                        setRecord({ ...record, note: event.target.value })
+                      }
+                    />
                   </div>
                 </div>
               </div>
@@ -292,7 +320,7 @@ export const Records = () => {
                     </SelectTrigger>
                     <SelectContent className="w-fit p-0 border">
                       <div className="grid grid-cols-5 gap-[24px]">
-                        {icons.map((item, index) => {
+                        {icons1.map((item, index) => {
                           const Icon = item.icon;
                           return (
                             <SelectItem className="w-fit p-0" value={index}>

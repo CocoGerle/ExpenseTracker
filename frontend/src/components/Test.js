@@ -10,8 +10,8 @@ export const Test = () => {
   const [accounts, setAccounts] = useState([]);
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
-  const { userInfo, setUserInfo } = useContext(UserContext);
-  console.log(userInfo);
+  // const { userInfo, setUserInfo } = useContext(UserContext);
+  // console.log(userInfo);
 
   useEffect(() => {
     const getData = async () => {

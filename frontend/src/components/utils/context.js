@@ -2,16 +2,25 @@
 
 const { createContext, useState } = require("react");
 
-export const UserContext = createContext(null);
+export const RecordContext = createContext(null);
 
-export const UserContextProvider = ({ children }) => {
-  const [userInfo, setUserInfo] = useState({
-    firstName: "gerle",
-    lastName: "coco",
+export const RecordContextProvider = ({ children }) => {
+  const [record, setRecord] = useState({
+    type: "exp",
+    amount: "",
+    category: {
+      name: "",
+      img: "",
+      color: "",
+    },
+    date: "",
+    time: "",
+    note: "",
+    payee: "",
   });
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo }}>
+    <RecordContext.Provider value={{ record, setRecord }}>
       {children}
-    </UserContext.Provider>
+    </RecordContext.Provider>
   );
 };

@@ -1,1 +1,70 @@
-[{"type":"expense","amount":"999999","category":{"name":"","img":"","color":""},"date":"November 2nd, 2024","time":"12:22","note":"hi","payee":"hello","id":"be812579-71b0-4892-8bed-4faac33f7a67"},{"amount":"1200","id":"7fb728fd-38dc-45c0-8407-4d5ff2904223"},{"amount":"3455","id":"92e82868-3d1a-4b7b-852d-8fff09cde72c"},{"id":"6dd7af76-32fb-4738-b02a-7dfbe2df2050"},{"0":"2","1":"3","2":"4","3":"5","4":"6","5":{"id":"6dd7af76-32fb-4738-b02a-7dfbe2df2050"},"amount":"23456","id":"06724433-3764-4681-910e-566219456fa5"},{"type":"","amount":"2222","id":"6edd235b-e98a-4e3f-b3a5-98aaad348a30"},{"type":"","amount":"11","id":"847527bd-ed9e-4050-aeed-7b9b42cbeb1f"},{"type":"","amount":"1","id":"60a37fd5-75bc-4b50-a2bc-18e09c0cc21b"},{"type":"","amount":"77777","id":"eefe1f02-da14-4640-9b3e-e35ebdff7c38"},{"type":"","amount":"23222","id":"b463272b-e810-4864-a72e-7973e767b1f9"},{"type":"","amount":"232","id":"bd682b96-ed8e-4f1f-abf9-684b229f9842"},{"type":"","amount":"1900","id":"5e37cdec-3f3a-4d25-84a9-03d43b22f191"},{"type":"","amount":"1900","id":"92ba57f7-5856-4dbd-9e49-f74ca7a8ebbf"},{"type":"","amount":"","id":"e998796d-fc24-4df1-b054-be71b67f77bd"},{"type":"","amount":"11","date":"","id":"74d7aeac-2d8e-44b8-b10c-a3b1f4c7716f"},{"type":"","amount":"11","date":"","id":"dc8b3315-4e5c-4b94-a086-c742cb3627fd"},{"type":"","amount":"11","date":"","id":"d444834f-c53f-48e8-b78f-e09157a6fe8c"},{"type":"","amount":"11","date":"","id":"9c767c4e-70b3-41de-a3ed-52129bc69ff1"}]
+[
+  {
+    "type": "exp",
+    "amount": "1",
+    "category": { "name": "Home", "img": "FaHome", "color": "orange" },
+    "date": "",
+    "time": "",
+    "note": "",
+    "payee": "",
+    "id": "1e18791a-989d-47b6-b2c7-a97546b61558"
+  },
+  {
+    "type": "exp",
+    "amount": "",
+    "category": { "name": "Gift", "img": "FaGift", "color": "red" },
+    "date": "",
+    "time": "",
+    "note": "",
+    "payee": "",
+    "id": ""
+  },
+  {
+    "type": "exp",
+    "amount": "",
+    "category": { "name": "Food", "img": "FaMugHot", "color": "blue" },
+    "date": "",
+    "time": "",
+    "note": "",
+    "payee": "",
+    "id": ""
+  },
+  {
+    "type": "exp",
+    "amount": "",
+    "category": {
+      "name": "Drink",
+      "img": "FaGlassMartiniAlt",
+      "color": "black"
+    },
+    "date": "",
+    "time": "",
+    "note": "",
+    "payee": "",
+    "id": ""
+  },
+  {
+    "type": "exp",
+    "amount": "",
+    "category": { "name": "Taxi", "img": "FaTaxi", "color": "brown" },
+    "date": "",
+    "time": "",
+    "note": "",
+    "payee": "",
+    "id": ""
+  },
+  {
+    "type": "exp",
+    "amount": "",
+    "category": {
+      "name": "Shopping",
+      "img": "FaShoppingBag",
+      "color": "purple"
+    },
+    "date": "",
+    "time": "",
+    "note": "",
+    "payee": "",
+    "id": ""
+  }
+]
