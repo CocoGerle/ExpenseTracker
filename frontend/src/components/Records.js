@@ -29,12 +29,11 @@ import {
 // import { ShoppingIcon } from "@/assets/icons/ShoppingIcon";
 import { Textarea } from "@/components/ui/textarea";
 import { DatePickerDemo } from "./Date";
-import { RandomIcon } from "@/assets/icons/RandomIcon";
-import { RandomIcon2 } from "@/assets/icons/RandomIcon2";
-import { RandomIcon3 } from "@/assets/icons/RandomIcon3";
+// import { RandomIcon } from "@/assets/icons/RandomIcon";
+// import { RandomIcon2 } from "@/assets/icons/RandomIcon2";
+// import { RandomIcon3 } from "@/assets/icons/RandomIcon3";
 import axios from "axios";
 import { RecordContext } from "./utils/context";
-import * as IconsPi from "react-icons/pi";
 import * as IconsFa from "react-icons/fa";
 
 const categories = [
@@ -52,21 +51,11 @@ const categories = [
 ];
 
 const icons1 = [
-  { icon: RandomIcon },
-  { icon: RandomIcon2 },
-  { icon: RandomIcon3 },
-  { icon: RandomIcon },
-  { icon: RandomIcon2 },
-  { icon: RandomIcon3 },
-  { icon: RandomIcon },
-  { icon: RandomIcon2 },
-  { icon: RandomIcon3 },
-  { icon: RandomIcon },
-  { icon: RandomIcon2 },
-  { icon: RandomIcon3 },
-  { icon: RandomIcon },
-  { icon: RandomIcon2 },
-  { icon: RandomIcon3 },
+  { icon: "FaHome" },
+  { icon: "FaGift" },
+  { icon: "FaMugHot" },
+  { icon: "FaTaxi" },
+  { icon: "FaShoppingBag" },
 ];
 
 const colors = [
@@ -87,7 +76,8 @@ export const Records = () => {
   const [activeButton, setActiveButton] = useState("expense");
   const [bgColor, setBgColor] = useState("black");
   const [records, setRecords] = useState([{}]);
-  const { record, setRecord } = useContext(RecordContext);
+  const { record, setRecord, category, setCategory } =
+    useContext(RecordContext);
 
   const handleInputChange = (index, newValue) => {
     const newValues = [...values];
@@ -109,6 +99,13 @@ export const Records = () => {
 
   const createRecord = async () => {
     const response = await axios.post(`http://localhost:3001/records`, record);
+  };
+
+  const createCategory = async () => {
+    const response = await axios.post(
+      `http://localhost:3001/category`,
+      category
+    );
   };
 
   return (
@@ -166,26 +163,27 @@ export const Records = () => {
                   <div className="w-full mt-5">
                     <h1 className="mb-1">Category</h1>
                     <Select
-                      value={record.category.name}
                       onValueChange={(event) =>
                         setRecord({
                           ...record,
-                          category: { ...record.category, name: event },
+                          category: {
+                            ...record.category,
+                            name: event.name,
+                            img: event.img,
+                            color: event.color,
+                          },
                         })
                       }
                     >
                       <SelectTrigger className="">
                         <SelectValue placeholder="Choose" />
                       </SelectTrigger>
-                      <SelectContent>
+                      {/* <SelectContent>
                         {records?.map((item) => {
                           const IconComponent = IconsFa[item.category?.img];
 
                           return (
-                            <SelectItem
-                              key={item.name}
-                              value={item.category?.name}
-                            >
+                            <SelectItem key={item.name} value={item.category}>
                               <div className="flex justify-around gap-3">
                                 <IconComponent
                                   size="24px"
@@ -196,7 +194,7 @@ export const Records = () => {
                             </SelectItem>
                           );
                         })}
-                      </SelectContent>
+                      </SelectContent> */}
                     </Select>
                   </div>
                   <div className="flex mt-5 w-[100%] gap-4">
@@ -314,17 +312,21 @@ export const Records = () => {
               <DialogContent className="w-[400px]">
                 <DialogTitle>Add Record</DialogTitle>
                 <div className="flex gap-[8px]">
-                  <Select>
+                  <Select
+                    onValueChange={(value) => {
+                      setCategory({ icon: value });
+                    }}
+                  >
                     <SelectTrigger className="w-[20%]">
-                      <SelectValue placeholder={RandomIcon2} />
+                      <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="w-fit p-0 border">
                       <div className="grid grid-cols-5 gap-[24px]">
                         {icons1.map((item, index) => {
-                          const Icon = item.icon;
+                          const Icon = IconsFa[item.icon];
                           return (
-                            <SelectItem className="w-fit p-0" value={index}>
-                              <div>
+                            <SelectItem className="w-fit p-0" value={item.icon}>
+                              <div value={item}>
                                 <Icon color={bgColor} />
                               </div>
                             </SelectItem>
@@ -332,31 +334,51 @@ export const Records = () => {
                         })}
                       </div>
                       <div className="flex gap-2">
-                        {colors.map((item, index) => (
+                        {/* {colors.map((item, index) => (
                           <div
+                            key={index}
                             className={`w-[24px] h-[24px] rounded-full`}
                             style={{ backgroundColor: item.color }}
                             onClick={() => {
                               setBgColor(item.color);
+                              setCategory({
+                                ...category,
+                                color: item.color,
+                              });
+                            }}
+                          ></div>
+                        ))} */}
+                        {colors.map((item, index) => (
+                          <div
+                            key={index}
+                            className="w-[24px] h-[24px] rounded-full"
+                            style={{ backgroundColor: item.color }}
+                            onClick={() => {
+                              setBgColor(item.color);
+                              setCategory({
+                                ...category,
+                                color: item.color,
+                              });
                             }}
                           ></div>
                         ))}
                       </div>
                     </SelectContent>
                   </Select>
-
-                  <Select>
-                    <SelectTrigger className="w-[80%]">
-                      <SelectValue placeholder="Name" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="light">Light</SelectItem>
-                      <SelectItem value="dark">Dark</SelectItem>
-                      <SelectItem value="system">System</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <input
+                    placeholder="name"
+                    onChange={(event) =>
+                      setCategory({
+                        ...category,
+                        name: event.target.value,
+                      })
+                    }
+                  ></input>
                 </div>
-                <Button className="bg-green-600 hover:bg-green-400 rounded-3xl">
+                <Button
+                  onClick={createCategory}
+                  className="bg-green-600 hover:bg-green-400 rounded-3xl"
+                >
                   Add Category
                 </Button>
               </DialogContent>

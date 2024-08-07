@@ -5,6 +5,11 @@ const { createContext, useState } = require("react");
 export const RecordContext = createContext(null);
 
 export const RecordContextProvider = ({ children }) => {
+  const [category, setCategory] = useState({
+    name: "",
+    icon: "",
+    color: "",
+  });
   const [record, setRecord] = useState({
     type: "exp",
     amount: "",
@@ -19,7 +24,9 @@ export const RecordContextProvider = ({ children }) => {
     payee: "",
   });
   return (
-    <RecordContext.Provider value={{ record, setRecord }}>
+    <RecordContext.Provider
+      value={{ record, setRecord, category, setCategory }}
+    >
       {children}
     </RecordContext.Provider>
   );
