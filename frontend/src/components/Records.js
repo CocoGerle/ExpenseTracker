@@ -35,20 +35,7 @@ import { DatePickerDemo } from "./Date";
 import axios from "axios";
 import { RecordContext } from "./utils/context";
 import * as IconsFa from "react-icons/fa";
-
-const categories = [
-  { title: "Food & Drinks" },
-  { title: "Shopping" },
-  { title: "Housing" },
-  { title: "Transportation" },
-  { title: "Vehicle" },
-  { title: "Life & Entertainment" },
-  { title: "Communication, PC" },
-  { title: "Financial expenses" },
-  { title: "Investments" },
-  { title: "Income" },
-  { title: "Others" },
-];
+import { getDate } from "date-fns";
 
 const icons1 = [
   { icon: "FaHome" },
@@ -75,9 +62,18 @@ export const Records = () => {
   const [values, setValues] = useState([minValue, maxValue]);
   const [activeButton, setActiveButton] = useState("expense");
   const [bgColor, setBgColor] = useState("black");
-  const [records, setRecords] = useState([{}]);
-  const { record, setRecord, category, setCategory } =
-    useContext(RecordContext);
+
+  const [categories, setCategories] = useState([]);
+  const {
+    record,
+    setRecord,
+    category,
+    setCategory,
+    records,
+    setRecords,
+    type,
+    setType,
+  } = useContext(RecordContext);
 
   const handleInputChange = (index, newValue) => {
     const newValues = [...values];
@@ -89,24 +85,37 @@ export const Records = () => {
     setActiveButton(button);
   };
 
-  useEffect(() => {
-    const getData = async () => {
-      const response = await axios.get("http://localhost:3001/records");
-      setRecords(response.data);
-    };
-    getData();
-  }, []);
-
   const createRecord = async () => {
     const response = await axios.post(`http://localhost:3001/records`, record);
+    getData();
   };
+
+  const getData = async () => {
+    const response = await axios?.get("http://localhost:3001/records");
+    setRecords(response.data);
+    console.log(records);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const createCategory = async () => {
     const response = await axios.post(
       `http://localhost:3001/category`,
       category
     );
+    getData1();
   };
+  const getData1 = async () => {
+    const response = await axios.get("http://localhost:3001/category");
+    setCategories(response.data);
+    console.log(categories);
+  };
+  useEffect(() => {
+    getData1();
+  }, []);
+  console.log(type);
 
   return (
     <div className="flex flex-col gap-6">
@@ -169,7 +178,7 @@ export const Records = () => {
                           category: {
                             ...record.category,
                             name: event.name,
-                            img: event.img,
+                            icon: event.icon,
                             color: event.color,
                           },
                         })
@@ -178,23 +187,19 @@ export const Records = () => {
                       <SelectTrigger className="">
                         <SelectValue placeholder="Choose" />
                       </SelectTrigger>
-                      {/* <SelectContent>
-                        {records?.map((item) => {
-                          const IconComponent = IconsFa[item.category?.img];
-
+                      <SelectContent>
+                        {categories.map((item, index) => {
+                          const Icon = IconsFa[item.icon];
                           return (
-                            <SelectItem key={item.name} value={item.category}>
-                              <div className="flex justify-around gap-3">
-                                <IconComponent
-                                  size="24px"
-                                  color={item.category?.color}
-                                />
-                                <h1>{item.category?.name}</h1>
+                            <SelectItem className="w-full p-0" value={item}>
+                              <div className="flex gap-3 p-[16px]">
+                                <Icon color={item.color} size={24} />
+                                {item.name}
                               </div>
                             </SelectItem>
                           );
                         })}
-                      </SelectContent> */}
+                      </SelectContent>
                     </Select>
                   </div>
                   <div className="flex mt-5 w-[100%] gap-4">
@@ -270,17 +275,23 @@ export const Records = () => {
       <Input type="search" placeholder="Search" />
       <div>
         <h1 className="mb-3 text-lg text-gray-800">Types</h1>
-        <RadioGroup className="py-2 px-3" defaultValue="option-one">
+        <RadioGroup
+          className="py-2 px-3"
+          defaultValue="all"
+          onValueChange={(value) => {
+            setType(value);
+          }}
+        >
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="option-one" id="option-one" />
+            <RadioGroupItem value="all" id="option-one" />
             <h1>All</h1>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="option-two" id="option-two" />
+            <RadioGroupItem value="inc" id="option-two" />
             <h1>Income</h1>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="option-three" id="option-three" />
+            <RadioGroupItem value="exp" id="option-three" />
             <h1>Expense</h1>
           </div>
         </RadioGroup>
@@ -291,11 +302,11 @@ export const Records = () => {
           <h1 className="text-gray-400">Clear</h1>
         </div>
         <div className="flex flex-col gap-2 text-gray-800">
-          {categories.map((item, index) => (
+          {categories?.map((item, index) => (
             <div className="flex justify-between items-center" key={index}>
               <div className="flex items-center gap-2">
                 <img className="h-4 w-5" src="Union.png" alt="Icon" />
-                <p>{item.title}</p>
+                <p>{item.name}</p>
               </div>
               <img
                 className="w-1.5 h-1"
@@ -314,7 +325,7 @@ export const Records = () => {
                 <div className="flex gap-[8px]">
                   <Select
                     onValueChange={(value) => {
-                      setCategory({ icon: value });
+                      setCategory((prev) => ({ ...prev, icon: value }));
                     }}
                   >
                     <SelectTrigger className="w-[20%]">
@@ -327,27 +338,13 @@ export const Records = () => {
                           return (
                             <SelectItem className="w-fit p-0" value={item.icon}>
                               <div value={item}>
-                                <Icon color={bgColor} />
+                                <Icon color={bgColor} size={24} />
                               </div>
                             </SelectItem>
                           );
                         })}
                       </div>
-                      <div className="flex gap-2">
-                        {/* {colors.map((item, index) => (
-                          <div
-                            key={index}
-                            className={`w-[24px] h-[24px] rounded-full`}
-                            style={{ backgroundColor: item.color }}
-                            onClick={() => {
-                              setBgColor(item.color);
-                              setCategory({
-                                ...category,
-                                color: item.color,
-                              });
-                            }}
-                          ></div>
-                        ))} */}
+                      <div className="flex gap-2 mt-4">
                         {colors.map((item, index) => (
                           <div
                             key={index}
@@ -368,19 +365,21 @@ export const Records = () => {
                   <input
                     placeholder="name"
                     onChange={(event) =>
-                      setCategory({
-                        ...category,
+                      setCategory((prev) => ({
+                        ...prev,
                         name: event.target.value,
-                      })
+                      }))
                     }
                   ></input>
                 </div>
-                <Button
-                  onClick={createCategory}
-                  className="bg-green-600 hover:bg-green-400 rounded-3xl"
-                >
-                  Add Category
-                </Button>
+                <DialogClose>
+                  <Button
+                    onClick={createCategory}
+                    className="bg-green-600 hover:bg-green-400 rounded-3xl"
+                  >
+                    Add Category
+                  </Button>
+                </DialogClose>
               </DialogContent>
             </Dialog>
           </div>

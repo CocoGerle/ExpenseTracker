@@ -1,70 +1,112 @@
 [
   {
     "type": "exp",
-    "amount": "1",
-    "category": { "name": "Home", "img": "FaHome", "color": "orange" },
+    "amount": "11",
+    "category": { "name": "dd", "icon": "FaMugHot", "color": "#41CC00" },
+    "date": "2024-08-17",
+    "time": "14:20",
+    "note": "",
+    "payee": "",
+    "id": "e451bdeb-17f8-4ae9-97ec-ec59ab35c601"
+  },
+  {
+    "type": "exp",
+    "amount": "11",
+    "category": { "name": "fr", "icon": "FaGift", "color": "" },
+    "date": "2024-08-17",
+    "time": "14:20",
+    "note": "",
+    "payee": "",
+    "id": "b7713755-6ce8-4256-94e2-d17cda8106da"
+  },
+  {
+    "type": "exp",
+    "amount": "111",
+    "category": { "name": "def", "icon": "FaMugHot", "color": "#F9D100" },
+    "date": "2024-08-17",
+    "time": "14:20",
+    "note": "",
+    "payee": "",
+    "id": "ea0f33a9-d58c-4a6e-b699-4e6947aa7319"
+  },
+  {
+    "type": "inc",
+    "amount": "111",
+    "category": { "name": "cd", "icon": "FaGift", "color": "#01B3FF" },
+    "date": "2024-08-17",
+    "time": "14:20",
+    "note": "",
+    "payee": "",
+    "id": "d2ca4121-14b5-4133-b4cf-f93a8208bd51"
+  },
+  {
+    "type": "exp",
+    "amount": "456789",
+    "category": { "name": "fcr", "icon": "FaGift", "color": "#01B3FF" },
     "date": "",
     "time": "",
     "note": "",
     "payee": "",
-    "id": "1e18791a-989d-47b6-b2c7-a97546b61558"
+    "id": "e2515a93-d230-403b-933b-de164560f15a"
+  },
+  {
+    "type": "inc",
+    "amount": "4567",
+    "category": { "name": "fcr", "icon": "FaGift", "color": "#01B3FF" },
+    "date": "",
+    "time": "",
+    "note": "",
+    "payee": "",
+    "id": "82e4f2b3-7a42-4694-bd44-0ac6de5d4cf1"
+  },
+  {
+    "type": "inc",
+    "amount": "1234",
+    "category": { "name": "dd", "icon": "FaMugHot", "color": "#41CC00" },
+    "date": "2024-08-01",
+    "time": "12:42",
+    "note": "",
+    "payee": "",
+    "id": "3d931ae1-5e09-4279-860a-479e53fced75"
+  },
+  {
+    "type": "exp",
+    "amount": "234567",
+    "category": { "name": "cd", "icon": "FaGift", "color": "#01B3FF" },
+    "date": "2024-08-01",
+    "time": "12:42",
+    "note": "",
+    "payee": "",
+    "id": "6d986c62-b3bd-4758-ab97-cbf5d8052658"
+  },
+  {
+    "type": "exp",
+    "amount": "76543",
+    "category": { "name": "dd", "icon": "FaMugHot", "color": "#41CC00" },
+    "date": "2024-08-01",
+    "time": "12:42",
+    "note": "",
+    "payee": "",
+    "id": "39f0b5f8-c97d-472c-8f4a-c0a0e70ca576"
+  },
+  {
+    "type": "exp",
+    "amount": "11111",
+    "category": { "name": "cd", "icon": "FaGift", "color": "#01B3FF" },
+    "date": "",
+    "time": "",
+    "note": "",
+    "payee": "",
+    "id": "4a233da5-3485-4877-ba80-7ec7f4c0e347"
   },
   {
     "type": "exp",
     "amount": "",
-    "category": { "name": "Gift", "img": "FaGift", "color": "red" },
+    "category": { "name": "cd", "icon": "FaGift", "color": "#01B3FF" },
     "date": "",
     "time": "",
     "note": "",
     "payee": "",
-    "id": ""
-  },
-  {
-    "type": "exp",
-    "amount": "",
-    "category": { "name": "Food", "img": "FaMugHot", "color": "blue" },
-    "date": "",
-    "time": "",
-    "note": "",
-    "payee": "",
-    "id": ""
-  },
-  {
-    "type": "exp",
-    "amount": "",
-    "category": {
-      "name": "Drink",
-      "img": "FaGlassMartiniAlt",
-      "color": "black"
-    },
-    "date": "",
-    "time": "",
-    "note": "",
-    "payee": "",
-    "id": ""
-  },
-  {
-    "type": "exp",
-    "amount": "",
-    "category": { "name": "Taxi", "img": "FaTaxi", "color": "brown" },
-    "date": "",
-    "time": "",
-    "note": "",
-    "payee": "",
-    "id": ""
-  },
-  {
-    "type": "exp",
-    "amount": "",
-    "category": {
-      "name": "Shopping",
-      "img": "FaShoppingBag",
-      "color": "purple"
-    },
-    "date": "",
-    "time": "",
-    "note": "",
-    "payee": "",
-    "id": ""
+    "id": "4273814a-60ce-4d63-86e7-28e092d1f0f5"
   }
 ]

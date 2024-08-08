@@ -15,7 +15,7 @@ export const RecordContextProvider = ({ children }) => {
     amount: "",
     category: {
       name: "",
-      img: "",
+      icon: "",
       color: "",
     },
     date: "",
@@ -23,9 +23,20 @@ export const RecordContextProvider = ({ children }) => {
     note: "",
     payee: "",
   });
+  const [records, setRecords] = useState([]);
+  const [type, setType] = useState("all");
   return (
     <RecordContext.Provider
-      value={{ record, setRecord, category, setCategory }}
+      value={{
+        record,
+        setRecord,
+        category,
+        setCategory,
+        records,
+        setRecords,
+        type,
+        setType,
+      }}
     >
       {children}
     </RecordContext.Provider>

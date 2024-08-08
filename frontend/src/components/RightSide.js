@@ -18,10 +18,15 @@ import axios from "axios";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Cards } from "./Cards";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { RecordContext } from "./utils/context";
+import * as IconsFa from "react-icons/fa";
 
 export const RightSide = () => {
-  const [records, setRecords] = useState([{}]);
+  const { record, setRecord, records, setRecords, type, setType } =
+    useContext(RecordContext);
+  const [filteredType, setFilteredType] = useState([]);
+
   useEffect(() => {
     const getData = async () => {
       const response = await axios.get("http://localhost:3001/records");
@@ -29,6 +34,21 @@ export const RightSide = () => {
     };
     getData();
   }, []);
+
+  const filterByType = () => {
+    setFilteredType(
+      records.filter((record) => {
+        if (type === "all") return true;
+        if (type === "inc" && record.type === "inc") return true;
+        if (type === "exp" && record.type === "exp") return true;
+        return false;
+      })
+    );
+  };
+  useEffect(() => {
+    filterByType();
+  }, [records, type]);
+
   return (
     <div>
       <div className=" pt-[48px] pb-[16px] pl-[24px] flex justify-between ">
@@ -64,20 +84,31 @@ export const RightSide = () => {
             </div>
             <div>Select all</div>
           </div>
-          <div className="text-slate-400">-35,500₮</div>
+          <div className="text-slate-400">9999999</div>
         </div>
         <div className="flex flex-col gap-3 ">
           <div className="text-[16px] font-semibold">Today</div>
           <div className="flex flex-col gap-3 ">
-            {records.map((item) => (
-             <Cards amount={item.amount} date={item.date}></Cards>
-            ))}
+            {filteredType.map((item) => {
+              const Icon = IconsFa[item.category?.icon];
+              return (
+                <div>
+                  <Cards
+                    type={item.type}
+                    name={item.category.name}
+                    amount={item.amount}
+                    date={item.date}
+                    time={item.time}
+                    icon={<Icon color={item.category.color} size={32} />}
+                  ></Cards>
+                </div>
+              );
+            })}
           </div>
         </div>
         <div className="flex flex-col gap-3 ">
           <div className="text-[16px] font-semibold">Yesterday</div>
-          <div className="flex flex-col gap-3 ">
-          </div>
+          <div className="flex flex-col gap-3 "></div>
         </div>
       </div>
     </div>
