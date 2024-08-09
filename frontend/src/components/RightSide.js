@@ -21,6 +21,8 @@ import { Cards } from "./Cards";
 import { useState, useEffect, useContext } from "react";
 import { RecordContext } from "./utils/context";
 import * as IconsFa from "react-icons/fa";
+import { HomeIcon } from "@/assets/icons/HomeIcon";
+import { FoodIcon } from "@/assets/icons/FoodIcon";
 
 export const RightSide = () => {
   const { record, setRecord, records, setRecords, type, setType } =
@@ -48,6 +50,15 @@ export const RightSide = () => {
   useEffect(() => {
     filterByType();
   }, [records, type]);
+
+  const calculateTotalAmount = (records) => {
+    return records.reduce((total, record) => {
+      const amount = parseFloat(record.amount);
+      return total + (record.type === "exp" ? -amount : amount);
+    }, 0);
+  };
+
+  const totalAmount = calculateTotalAmount(records);
 
   return (
     <div>
@@ -84,7 +95,13 @@ export const RightSide = () => {
             </div>
             <div>Select all</div>
           </div>
-          <div className="text-slate-400">9999999</div>
+          <div
+            className={`text-md ${
+              totalAmount > 0 ? "text-green-600" : "text-red-600"
+            }`}
+          >
+            {totalAmount}$
+          </div>
         </div>
         <div className="flex flex-col gap-3 ">
           <div className="text-[16px] font-semibold">Today</div>
@@ -99,7 +116,13 @@ export const RightSide = () => {
                     amount={item.amount}
                     date={item.date}
                     time={item.time}
-                    icon={<Icon color={item.category.color} size={32} />}
+                    icon={
+                      Icon ? (
+                        <Icon color={item.category.color} size={24} />
+                      ) : (
+                        <FoodIcon />
+                      )
+                    }
                   ></Cards>
                 </div>
               );

@@ -20,22 +20,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-// import { AddCategory } from "@/assets/icons/AddCategory";
-// import { Home } from "@/assets/icons/Home";
-// import { GiftIcon } from "@/assets/icons/GiftIcon";
-// import { Food } from "@/assets/icons/Food";
-// import { WineIcon } from "@/assets/icons/WineIcon";
-// import { TaxiIcon } from "@/assets/icons/TaxiIcon";
-// import { ShoppingIcon } from "@/assets/icons/ShoppingIcon";
 import { Textarea } from "@/components/ui/textarea";
-import { DatePickerDemo } from "./Date";
-// import { RandomIcon } from "@/assets/icons/RandomIcon";
-// import { RandomIcon2 } from "@/assets/icons/RandomIcon2";
-// import { RandomIcon3 } from "@/assets/icons/RandomIcon3";
 import axios from "axios";
 import { RecordContext } from "./utils/context";
 import * as IconsFa from "react-icons/fa";
-import { getDate } from "date-fns";
+import { FoodIcon } from "@/assets/icons/FoodIcon";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const icons1 = [
   { icon: "FaHome" },
@@ -64,6 +54,9 @@ export const Records = () => {
   const [bgColor, setBgColor] = useState("black");
 
   const [categories, setCategories] = useState([]);
+
+  const [hiddenCategories, setHiddenCategories] = useState([]);
+
   const {
     record,
     setRecord,
@@ -115,7 +108,14 @@ export const Records = () => {
   useEffect(() => {
     getData1();
   }, []);
-  console.log(type);
+
+  const toggleCategory = (id) => {
+    if (hiddenCategories.includes(id)) {
+      setHiddenCategories((prev) => prev.filter((item) => item !== id));
+    } else {
+      setHiddenCategories((prev) => [...prev, id]);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -193,7 +193,11 @@ export const Records = () => {
                           return (
                             <SelectItem className="w-full p-0" value={item}>
                               <div className="flex gap-3 p-[16px]">
-                                <Icon color={item.color} size={24} />
+                                {Icon ? (
+                                  <Icon color={item.color} size={24} />
+                                ) : (
+                                  <FoodIcon />
+                                )}
                                 {item.name}
                               </div>
                             </SelectItem>
@@ -303,9 +307,17 @@ export const Records = () => {
         </div>
         <div className="flex flex-col gap-2 text-gray-800">
           {categories?.map((item, index) => (
-            <div className="flex justify-between items-center" key={index}>
+            <div
+              className="flex justify-between items-center"
+              key={index}
+              onClick={() => toggleCategory(item.id)}
+            >
               <div className="flex items-center gap-2">
-                <img className="h-4 w-5" src="Union.png" alt="Icon" />
+                {hiddenCategories.includes(item.id) ? (
+                  <FaEyeSlash />
+                ) : (
+                  <FaEye />
+                )}
                 <p>{item.name}</p>
               </div>
               <img

@@ -1,9 +1,7 @@
 "use client";
-
-import { FoodIcon } from "@/assets/icons/FoodIcon";
 import { Checkbox } from "./ui/checkbox";
-import { HomeIcon } from "@/assets/icons/HomeIcon";
 import * as IconsFa from "react-icons/fa";
+
 export const Cards = ({ name, date, time, amount, icon, type }) => {
   return (
     <div className="flex justify-between bg-white items-center px-6 py-3 rounded-lg">
