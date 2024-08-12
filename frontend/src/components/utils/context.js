@@ -1,10 +1,31 @@
 "use client";
 
-const { createContext, useState } = require("react");
+import axios from "axios";
+
+const { createContext, useState, useEffect } = require("react");
 
 export const RecordContext = createContext(null);
 
 export const RecordContextProvider = ({ children }) => {
+  const [records, setRecords] = useState([]);
+  const [type, setType] = useState("all");
+  const [hiddenCategories, setHiddenCategories] = useState([]);
+
+  const getData = async () => {
+    const response = await axios?.get("http://localhost:3001/records");
+    setRecords(response.data);
+    console.log(records);
+  };
+
+  const toggleCategory = (id) => {
+    if (hiddenCategories.includes(id)) {
+      setHiddenCategories((prev) => prev.filter((item) => item !== id));
+    } else {
+      setHiddenCategories((prev) => [...prev, id]);
+    }
+    console.log(hiddenCategories);
+  };
+
   const [category, setCategory] = useState({
     name: "",
     icon: "",
@@ -23,8 +44,7 @@ export const RecordContextProvider = ({ children }) => {
     note: "",
     payee: "",
   });
-  const [records, setRecords] = useState([]);
-  const [type, setType] = useState("all");
+
   return (
     <RecordContext.Provider
       value={{
@@ -36,6 +56,10 @@ export const RecordContextProvider = ({ children }) => {
         setRecords,
         type,
         setType,
+        toggleCategory,
+        hiddenCategories,
+        setHiddenCategories,
+        getData,
       }}
     >
       {children}

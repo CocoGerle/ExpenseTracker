@@ -55,8 +55,6 @@ export const Records = () => {
 
   const [categories, setCategories] = useState([]);
 
-  const [hiddenCategories, setHiddenCategories] = useState([]);
-
   const {
     record,
     setRecord,
@@ -66,6 +64,10 @@ export const Records = () => {
     setRecords,
     type,
     setType,
+    hiddenCategories,
+    setHiddenCategories,
+    toggleCategory,
+    getData,
   } = useContext(RecordContext);
 
   const handleInputChange = (index, newValue) => {
@@ -81,12 +83,6 @@ export const Records = () => {
   const createRecord = async () => {
     const response = await axios.post(`http://localhost:3001/records`, record);
     getData();
-  };
-
-  const getData = async () => {
-    const response = await axios?.get("http://localhost:3001/records");
-    setRecords(response.data);
-    console.log(records);
   };
 
   useEffect(() => {
@@ -108,14 +104,6 @@ export const Records = () => {
   useEffect(() => {
     getData1();
   }, []);
-
-  const toggleCategory = (id) => {
-    if (hiddenCategories.includes(id)) {
-      setHiddenCategories((prev) => prev.filter((item) => item !== id));
-    } else {
-      setHiddenCategories((prev) => [...prev, id]);
-    }
-  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -180,6 +168,7 @@ export const Records = () => {
                             name: event.name,
                             icon: event.icon,
                             color: event.color,
+                            id: event.id,
                           },
                         })
                       }
@@ -303,7 +292,14 @@ export const Records = () => {
       <div>
         <div className="flex justify-between mb-5">
           <h1 className="font-semibold">Category</h1>
-          <h1 className="text-gray-400">Clear</h1>
+          <h1
+            className="text-gray-400 hover:text-gray-700 cursor-pointer"
+            onClick={() => {
+              setHiddenCategories([]);
+            }}
+          >
+            Clear
+          </h1>
         </div>
         <div className="flex flex-col gap-2 text-gray-800">
           {categories?.map((item, index) => (

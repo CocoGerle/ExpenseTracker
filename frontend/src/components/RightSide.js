@@ -25,31 +25,40 @@ import { HomeIcon } from "@/assets/icons/HomeIcon";
 import { FoodIcon } from "@/assets/icons/FoodIcon";
 
 export const RightSide = () => {
-  const { record, setRecord, records, setRecords, type, setType } =
-    useContext(RecordContext);
+  const {
+    record,
+    setRecord,
+    records,
+    setRecords,
+    type,
+    setType,
+    hiddenCategories,
+    toggleCategory,
+    category,
+    setCategory,
+    getData,
+  } = useContext(RecordContext);
   const [filteredType, setFilteredType] = useState([]);
 
   useEffect(() => {
-    const getData = async () => {
-      const response = await axios.get("http://localhost:3001/records");
-      setRecords(response.data);
-    };
     getData();
   }, []);
 
   const filterByType = () => {
     setFilteredType(
-      records.filter((record) => {
-        if (type === "all") return true;
-        if (type === "inc" && record.type === "inc") return true;
-        if (type === "exp" && record.type === "exp") return true;
-        return false;
-      })
+      records
+        .filter((record) => {
+          if (type === "all") return true;
+          if (type === "inc" && record.type === "inc") return true;
+          if (type === "exp" && record.type === "exp") return true;
+          return false;
+        })
+        .filter((record) => !hiddenCategories.includes(record.category.id))
     );
   };
   useEffect(() => {
     filterByType();
-  }, [records, type]);
+  }, [records, type, hiddenCategories]);
 
   const calculateTotalAmount = (records) => {
     return records.reduce((total, record) => {

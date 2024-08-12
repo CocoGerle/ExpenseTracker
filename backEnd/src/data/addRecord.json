@@ -1,1 +1,77 @@
-[{"type":"exp","amount":"11","category":{"name":"dd","icon":"FaMugHot","color":"#41CC00"},"date":"2024-08-17","time":"14:20","note":"","payee":"","id":"e451bdeb-17f8-4ae9-97ec-ec59ab35c601"},{"type":"exp","amount":"11","category":{"name":"fr","icon":"FaGift","color":""},"date":"2024-08-17","time":"14:20","note":"","payee":"","id":"b7713755-6ce8-4256-94e2-d17cda8106da"},{"type":"exp","amount":"111","category":{"name":"def","icon":"FaMugHot","color":"#F9D100"},"date":"2024-08-17","time":"14:20","note":"","payee":"","id":"ea0f33a9-d58c-4a6e-b699-4e6947aa7319"},{"type":"inc","amount":"111","category":{"name":"cd","icon":"FaGift","color":"#01B3FF"},"date":"2024-08-17","time":"14:20","note":"","payee":"","id":"d2ca4121-14b5-4133-b4cf-f93a8208bd51"},{"type":"exp","amount":"456789","category":{"name":"fcr","icon":"FaGift","color":"#01B3FF"},"date":"","time":"","note":"","payee":"","id":"e2515a93-d230-403b-933b-de164560f15a"},{"type":"inc","amount":"4567","category":{"name":"fcr","icon":"FaGift","color":"#01B3FF"},"date":"","time":"","note":"","payee":"","id":"82e4f2b3-7a42-4694-bd44-0ac6de5d4cf1"},{"type":"inc","amount":"1234","category":{"name":"dd","icon":"FaMugHot","color":"#41CC00"},"date":"2024-08-01","time":"12:42","note":"","payee":"","id":"3d931ae1-5e09-4279-860a-479e53fced75"},{"type":"exp","amount":"234567","category":{"name":"cd","icon":"FaGift","color":"#01B3FF"},"date":"2024-08-01","time":"12:42","note":"","payee":"","id":"6d986c62-b3bd-4758-ab97-cbf5d8052658"},{"type":"exp","amount":"76543","category":{"name":"dd","icon":"FaMugHot","color":"#41CC00"},"date":"2024-08-01","time":"12:42","note":"","payee":"","id":"39f0b5f8-c97d-472c-8f4a-c0a0e70ca576"},{"type":"exp","amount":"11111","category":{"name":"cd","icon":"FaGift","color":"#01B3FF"},"date":"","time":"","note":"","payee":"","id":"4a233da5-3485-4877-ba80-7ec7f4c0e347"},{"type":"exp","amount":"2121","category":{"name":"dd","icon":"FaMugHot","color":"#41CC00"},"date":"","time":"","note":"","payee":"","id":"5301bf33-e884-47dd-afac-ad2227f474ad"},{"type":"exp","amount":"12","category":{"name":"dd","icon":"FaMugHot","color":"#41CC00"},"date":"","time":"","note":"","payee":"","id":"20636b5c-fc0c-49bd-96c8-2186e7e7830b"},{"type":"exp","amount":"4444","category":{"name":"dd","icon":"FaMugHot","color":"#41CC00"},"date":"","time":"","note":"","payee":"","id":"46114113-0af9-42f6-b7a4-63051729719f"},{"type":"inc","amount":"10000000","category":{"name":"dd","icon":"FaMugHot","color":"#41CC00"},"date":"","time":"","note":"","payee":"","id":"5af1ba4c-4297-4567-a181-ed4245029ed8"},{"type":"exp","amount":"1000000","category":{"name":"cd","icon":"FaGift","color":"#01B3FF"},"date":"","time":"","note":"","payee":"","id":"691370d3-6bf6-4780-ae97-d53232292452"},{"type":"exp","amount":"10000000","category":{"name":"fr","icon":"FaMugHot","color":"#41CC00"},"date":"","time":"","note":"","payee":"","id":"061623dd-b38a-4a3a-b22a-7beaa582c086"},{"type":"inc","amount":"100000000","category":{"name":"fr","icon":"FaMugHot","color":"#41CC00"},"date":"","time":"","note":"","payee":"","id":"aef319d5-a3a6-45d7-a63f-5ec89b29b10c"},{"type":"exp","amount":"44","category":{"name":"","icon":"","color":""},"date":"","time":"","note":"","payee":"","id":"f19fa326-4c0f-4b01-9eaf-677f9194cc4f"}]
+[
+  {
+    "type": "exp",
+    "amount": "111",
+    "category": {
+      "name": "Bailey",
+      "icon": "FaHome",
+      "color": "#FF7B01",
+      "id": "f125074e-48ce-458c-ab48-b3ef8f5fb948"
+    },
+    "date": "",
+    "time": "",
+    "note": "",
+    "payee": "",
+    "id": "dcff8ee1-30f6-4710-8f87-d86362ecc4ec"
+  },
+  {
+    "type": "inc",
+    "amount": "11111",
+    "category": {
+      "name": "Irgen Z",
+      "icon": "FaGift",
+      "color": "#41CC00",
+      "id": "6eedd0e2-d173-444f-87aa-24498952ca3c"
+    },
+    "date": "",
+    "time": "",
+    "note": "",
+    "payee": "",
+    "id": "ce44170b-a7f8-46e9-95b4-22a4378efd53"
+  },
+  {
+    "type": "inc",
+    "amount": "23453",
+    "category": {
+      "name": "Irgen Naba",
+      "icon": "FaMugHot",
+      "color": "#AE01FF",
+      "id": "19e7ad0b-e3e0-4c12-aaf6-3121f9bdedf3"
+    },
+    "date": "",
+    "time": "",
+    "note": "",
+    "payee": "",
+    "id": "cd7c56cc-b62e-4f99-9575-cf79ba1130ec"
+  },
+  {
+    "type": "exp",
+    "amount": "4444",
+    "category": {
+      "name": "Irgen Z",
+      "icon": "FaGift",
+      "color": "#41CC00",
+      "id": "6eedd0e2-d173-444f-87aa-24498952ca3c"
+    },
+    "date": "",
+    "time": "",
+    "note": "",
+    "payee": "",
+    "id": "edaebc83-acce-4e62-8def-8bae6f30a6fb"
+  },
+  {
+    "type": "exp",
+    "amount": "666",
+    "category": {
+      "name": "Gerlee",
+      "icon": "FaMugHot",
+      "color": "#01B3FF",
+      "id": "b00a7812-8777-4111-a819-819afb279ff3"
+    },
+    "date": "",
+    "time": "",
+    "note": "",
+    "payee": "",
+    "id": "34a4d128-35e6-483d-9c1d-b01666327f5e"
+  }
+]
