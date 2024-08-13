@@ -1,9 +1,10 @@
 "use client";
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { api } from "../lib/axios";
 
-const { createContext, useState, useEffect } = require("react");
+const { createContext, useState, useEffect, useContext } = require("react");
 
 const AuthContext = createContext();
 
@@ -19,7 +20,7 @@ export const AuthProvider = ({ children }) => {
       setIsLoggedIn(true);
       router.push("/");
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message ?? error.message);
     }
   };
 
@@ -33,3 +34,5 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => useContext(AuthContext);
