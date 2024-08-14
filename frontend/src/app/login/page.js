@@ -41,12 +41,14 @@ const Login = () => {
             }}
           />
         </div>
-        <Button
-          className="bg-[#0166FF] rounded-3xl w-[384px] h-[48px]"
+
+        <button
+          className="bg-[#0166FF] rounded-3xl w-[384px] h-[48px] text-white"
           onClick={() => login(email, password)}
         >
+          {" "}
           Log in
-        </Button>
+        </button>
         <div className="flex gap-4">
           <p>Don't have account?</p>
           <p className="text-[#0166FF]">Sign Up</p>

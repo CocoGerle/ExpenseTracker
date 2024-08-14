@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (!isLoggedIn) router.push("/login");
+    if (!isLoggedIn) router.push("/signup");
   }, [isLoggedIn]);
 
   return (
