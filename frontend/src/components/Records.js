@@ -81,7 +81,11 @@ export const Records = () => {
   };
 
   const createRecord = async () => {
-    const response = await axios.post(`http://localhost:3001/records`, record);
+    const response = await axios.post(`http://localhost:3001/records`, record, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     getData();
   };
 
@@ -92,12 +96,21 @@ export const Records = () => {
   const createCategory = async () => {
     const response = await axios.post(
       `http://localhost:3001/category`,
-      category
+      category,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
     );
     getData1();
   };
   const getData1 = async () => {
-    const response = await axios.get("http://localhost:3001/category");
+    const response = await axios.get("http://localhost:3001/category", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     setCategories(response.data);
     console.log(categories);
   };

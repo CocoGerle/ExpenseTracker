@@ -3,20 +3,20 @@
 import { GeldIcon } from "@/assets/icons/GeldIcon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/components/utils/AuthProvider";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-const SignUp = () => {
+const Register = () => {
+  const { register } = useAuth();
   const initialValues = {
     name: "",
     email: "",
     password: "",
     rePassword: "",
   };
-  const onSubmit = (values) => {
-    alert(
-      `hello ${formik.values.name} ${formik.values.email} ${formik.values.password} ${formik.values.rePassword}`
-    );
+  const onSubmit = async (values) => {
+    await register(values.name, values.email, values.password);
   };
 
   const validationSchema = yup.object({
@@ -49,9 +49,9 @@ const SignUp = () => {
 
   return (
     <div className="flex h-screen w-screen ">
-      <form
+      <div
         className="flex flex-1 flex-col items-center mt-[276px] ml-[222px] gap-[40px]"
-        onSubmit={formik.handleSubmit}
+        // onSubmit={formik.handleSubmit}
       >
         <GeldIcon />
         <div className="flex flex-col items-center">
@@ -110,6 +110,7 @@ const SignUp = () => {
         <button
           className="bg-[#0166FF] rounded-3xl w-[384px] h-[48px] text-white"
           type="submit"
+          onClick={formik.submitForm}
         >
           {" "}
           Sign Up
@@ -118,9 +119,9 @@ const SignUp = () => {
           <p>Already have account?</p>
           <p className="text-[#0166FF] ">Log in</p>
         </div>
-      </form>
+      </div>
       <div className="bg-[#0166FF] flex-1 "></div>
     </div>
   );
 };
-export default SignUp;
+export default Register;

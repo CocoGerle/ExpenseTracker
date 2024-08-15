@@ -12,7 +12,11 @@ export const RecordContextProvider = ({ children }) => {
   const [hiddenCategories, setHiddenCategories] = useState([]);
 
   const getData = async () => {
-    const response = await axios?.get("http://localhost:3001/records");
+    const response = await axios?.get("http://localhost:3001/records", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     setRecords(response.data);
     console.log(records);
   };

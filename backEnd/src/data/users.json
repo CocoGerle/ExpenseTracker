@@ -1,6 +1,20 @@
 [
   {
-    "email": "lol",
-    "password": "123"
+    "id": "68dce6eb-7237-442f-95f6-ee3316ca0433",
+    "name": "gerle",
+    "email": "cocogerle@gmail.com",
+    "password": "323399999aA"
+  },
+  {
+    "id": "be07cca3-ca51-4e04-adc3-4e0546363043",
+    "name": "naba",
+    "email": "naba@g",
+    "password": "323399999aA"
+  },
+  {
+    "id": "f8cb320d-4453-45a9-b821-f45cda444458",
+    "name": "zororo",
+    "email": "zororo@g",
+    "password": "323399999aA"
   }
 ]
