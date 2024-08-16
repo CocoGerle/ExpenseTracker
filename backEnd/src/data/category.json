@@ -1,1 +1,38 @@
-[{"name":"Bailey","icon":"FaHome","color":"#FF7B01","id":"f125074e-48ce-458c-ab48-b3ef8f5fb948"},{"name":"Irgen Z","icon":"FaGift","color":"#41CC00","id":"6eedd0e2-d173-444f-87aa-24498952ca3c"},{"name":"Irgen Naba","icon":"FaMugHot","color":"#AE01FF","id":"19e7ad0b-e3e0-4c12-aaf6-3121f9bdedf3"},{"name":"Gerlee","icon":"FaMugHot","color":"#01B3FF","id":"b00a7812-8777-4111-a819-819afb279ff3"},{"name":"f","icon":"FaMugHot","color":"#F9D100","id":"65c4364b-01a1-481f-b63c-f0e4c79d56da"}]
+[
+  {
+    "name": "Bailey",
+    "icon": "FaHome",
+    "color": "#FF7B01",
+    "id": "f125074e-48ce-458c-ab48-b3ef8f5fb948"
+  },
+  {
+    "name": "Irgen Z",
+    "icon": "FaGift",
+    "color": "#41CC00",
+    "id": "6eedd0e2-d173-444f-87aa-24498952ca3c"
+  },
+  {
+    "name": "Irgen Naba",
+    "icon": "FaMugHot",
+    "color": "#AE01FF",
+    "id": "19e7ad0b-e3e0-4c12-aaf6-3121f9bdedf3"
+  },
+  {
+    "name": "Gerlee",
+    "icon": "FaMugHot",
+    "color": "#01B3FF",
+    "id": "b00a7812-8777-4111-a819-819afb279ff3"
+  },
+  {
+    "name": "f",
+    "icon": "FaMugHot",
+    "color": "#F9D100",
+    "id": "65c4364b-01a1-481f-b63c-f0e4c79d56da"
+  },
+  {
+    "name": "12121",
+    "icon": "FaGift",
+    "color": "#41CC00",
+    "id": "7f2b0c54-68cb-4f46-a61a-83e90f435559"
+  }
+]

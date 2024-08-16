@@ -69,6 +69,16 @@ export const AuthProvider = ({ children }) => {
     loadUser();
   }, []);
 
+  const LogOut = async () => {
+    try {
+      localStorage.removeItem("token");
+      toast.success("You have been logged out successfully.");
+    } catch (error) {
+      console.error("Logout error", error);
+      toast.error("Log out hiihed alda garla.");
+    }
+  };
+
   useEffect(() => {
     if (authPaths.includes(usePathname)) return;
 
@@ -80,7 +90,7 @@ export const AuthProvider = ({ children }) => {
   if (!isReady) return null;
 
   return (
-    <AuthContext.Provider value={{ user, login, register }}>
+    <AuthContext.Provider value={{ user, login, register, LogOut }}>
       {children}
     </AuthContext.Provider>
   );

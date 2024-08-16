@@ -9,6 +9,7 @@ const { accountRouter } = require("./routes/account.route");
 const { categoryRouter } = require("./routes/category.route");
 const { authRouter } = require("./routes/auth.route");
 const { authMiddleware } = require("./middlewares/auth.middleware");
+const { userRouter } = require("./routes/user.route");
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use("/accounts", accountRouter);
 app.use("/records", recordRouter);
 app.use("/category", categoryRouter);
 app.use("/auth", authRouter);
+app.use("/users", userRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

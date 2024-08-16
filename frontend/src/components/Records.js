@@ -26,6 +26,7 @@ import { RecordContext } from "./utils/context";
 import * as IconsFa from "react-icons/fa";
 import { FoodIcon } from "@/assets/icons/FoodIcon";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { MdDeleteOutline } from "react-icons/md";
 
 const icons1 = [
   { icon: "FaHome" },
@@ -117,6 +118,30 @@ export const Records = () => {
   useEffect(() => {
     getData1();
   }, []);
+
+  const deleteCategory = async (id) => {
+    const response = await axios?.delete(
+      `http://localhost:3001/category/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    setCategories(categories.filter((item) => item.id !== id));
+  };
+
+  // const deleteCategory = async (id) => {
+  //   const response = await axios?.delete(
+  //     `http://localhost:3007/categories/${id}`,
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //       },
+  //     }
+  //   );
+  //   setCategories(categories.filter((category) => category.id !== id));
+  // };
 
   return (
     <div className="flex flex-col gap-6">
@@ -316,12 +341,11 @@ export const Records = () => {
         </div>
         <div className="flex flex-col gap-2 text-gray-800">
           {categories?.map((item, index) => (
-            <div
-              className="flex justify-between items-center"
-              key={index}
-              onClick={() => toggleCategory(item.id)}
-            >
-              <div className="flex items-center gap-2">
+            <div className="flex justify-between items-center" key={index}>
+              <div
+                onClick={() => toggleCategory(item.id)}
+                className="flex items-center gap-2"
+              >
                 {hiddenCategories.includes(item.id) ? (
                   <FaEyeSlash />
                 ) : (
@@ -329,11 +353,13 @@ export const Records = () => {
                 )}
                 <p>{item.name}</p>
               </div>
-              <img
-                className="w-1.5 h-1"
-                src="arrow_drop_down.png"
-                alt="Dropdown Icon"
-              />
+              <div
+                onClick={() => {
+                  deleteCategory(item.id);
+                }}
+              >
+                <MdDeleteOutline />
+              </div>
             </div>
           ))}
           <div className="flex items-center gap-2">

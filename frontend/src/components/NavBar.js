@@ -2,8 +2,11 @@
 import { usePathname } from "next/navigation";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { useContext } from "react";
+import { useAuth } from "./utils/AuthProvider";
 
 export const NavBar = () => {
+  const { LogOut } = useAuth();
   return (
     <div className=" max-w-screen-2xl m-auto py-[16px] px-[120px] flex justify-between">
       <div className="flex items-center gap-[24px] text-[#0F172A] text-[16px]">
@@ -34,9 +37,14 @@ export const NavBar = () => {
       </div>
       <div className="flex gap-[24px]">
         <Button>+ Records</Button>
-        <div className="w-[40px] h-[40px] rounded-full overflow-hidden">
-          <img src="self-port.jpg" />
-        </div>
+        <Link href={"/login"}>
+          <div
+            onClick={LogOut}
+            className="w-[40px] h-[40px] rounded-full overflow-hidden"
+          >
+            <img src="self-port.jpg" />
+          </div>
+        </Link>
       </div>
     </div>
   );

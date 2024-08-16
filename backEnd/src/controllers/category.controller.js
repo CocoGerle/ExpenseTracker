@@ -63,5 +63,34 @@ const getCategory = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+const deleteCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-module.exports = { createCategory, getAllCategory, getCategory };
+    const filePath = path.join(__dirname, "..", "data", "category.json");
+    const rawData = fs.readFileSync(filePath, "utf-8");
+    const accounts = JSON.parse(rawData);
+
+    const accountIndex = accounts.findIndex((account) => account.id === id);
+
+    if (accountIndex === -1) {
+      return res.status(404).json({ error: "Account not found" });
+    }
+
+    const deletedAccount = accounts.splice(accountIndex, 1)[0];
+
+    fs.writeFileSync(filePath, JSON.stringify(accounts, null, 2));
+
+    res.json({ message: "Account successfully deleted", deletedAccount });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+module.exports = {
+  createCategory,
+  getAllCategory,
+  getCategory,
+  deleteCategory,
+};
