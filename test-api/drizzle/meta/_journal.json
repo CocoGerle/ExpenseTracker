@@ -5,8 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1723604029580,
-      "tag": "0000_wooden_venom",
+      "when": 1724069235701,
+      "tag": "0000_worthless_nico_minoru",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1724071617036,
+      "tag": "0001_panoramic_alice",
       "breakpoints": true
     }
   ]

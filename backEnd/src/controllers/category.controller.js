@@ -23,7 +23,6 @@ const getAllCategory = async (req, res) => {
 };
 
 const createCategory = async (req, res) => {
-  console.log(req.body);
   try {
     const filePath = path.join(__dirname, "..", "data", "category.json");
 

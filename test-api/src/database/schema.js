@@ -2,6 +2,9 @@ import { relations } from "drizzle-orm";
 import { integer, pgTable, serial, varchar } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
+  // Ehniih code der harah ner ---- Daraginh database der harah ner
+  // ene id ni primary key bn gej helj ugsn.
+  // serial gdg ni avtomataar uusdeg too.
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 256 }),
   email: varchar("email", { length: 256 }),
