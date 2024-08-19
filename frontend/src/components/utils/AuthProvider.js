@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
       toast.success(res.data.message);
       router.replace("/");
     } catch (error) {
-      toast.error(error.res?.data.message ?? error.message);
+      toast.error(error.res?.data.message ?? "Check your password or email");
     }
   };
 
@@ -38,7 +38,9 @@ export const AuthProvider = ({ children }) => {
       router.push("/login");
     } catch (err) {
       console.log(err);
-      toast.error(err.response?.data.message ?? err.message);
+      // toast.error(err.response?.data.message ?? err.message);
+      const errorMessage = err.res?.data?.message ?? "ene email burtgeltei bna";
+      toast.error(errorMessage);
     }
   };
 
@@ -58,6 +60,7 @@ export const AuthProvider = ({ children }) => {
         });
 
         setUser(res.data);
+        // console.log(res.data);
       } catch (err) {
         console.log(err);
         localStorage.removeItem("token");
@@ -80,7 +83,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (authPaths.includes(usePathname)) return;
+    if (authPaths.includes(pathname)) return;
 
     if (!isReady) return;
 

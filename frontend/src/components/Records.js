@@ -113,7 +113,6 @@ export const Records = () => {
       },
     });
     setCategories(response.data);
-    console.log(categories);
   };
   useEffect(() => {
     getData1();
@@ -128,20 +127,8 @@ export const Records = () => {
         },
       }
     );
-    setCategories(categories.filter((item) => item.id !== id));
+    setCategories(categories.filter((category) => category.id !== id));
   };
-
-  // const deleteCategory = async (id) => {
-  //   const response = await axios?.delete(
-  //     `http://localhost:3007/categories/${id}`,
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //       },
-  //     }
-  //   );
-  //   setCategories(categories.filter((category) => category.id !== id));
-  // };
 
   return (
     <div className="flex flex-col gap-6">

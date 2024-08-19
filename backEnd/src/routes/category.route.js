@@ -12,6 +12,6 @@ categoryRouter
   .post("/", createCategory)
   .get("/", getAllCategory)
   .get("/:id", getCategory)
-  .delete(":id", deleteCategory);
+  .delete("/:id", deleteCategory);
 
 module.exports = { categoryRouter };

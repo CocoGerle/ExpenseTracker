@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/components/utils/AuthProvider";
 import { useFormik } from "formik";
+import Link from "next/link";
 import * as yup from "yup";
 
 const Register = () => {
@@ -117,7 +118,9 @@ const Register = () => {
         </button>
         <div className="flex gap-4">
           <p>Already have account?</p>
-          <p className="text-[#0166FF] ">Log in</p>
+          <Link href={"/login"}>
+            <p className="text-[#0166FF] ">Log in</p>
+          </Link>
         </div>
       </div>
       <div className="bg-[#0166FF] flex-1 "></div>

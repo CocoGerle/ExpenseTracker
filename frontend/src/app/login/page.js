@@ -3,6 +3,7 @@
 import { GeldIcon } from "@/assets/icons/GeldIcon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 const { useState } = require("react");
 const { useAuth } = require("../../components/utils/AuthProvider");
@@ -49,9 +50,12 @@ const Login = () => {
           {" "}
           Log in
         </button>
+
         <div className="flex gap-4">
           <p>Don't have account?</p>
-          <p className="text-[#0166FF]">Sign Up</p>
+          <Link href={"/register"}>
+            <p className="text-[#0166FF]">Sign Up</p>
+          </Link>
         </div>
       </div>
       <div className="bg-[#0166FF] flex-1 "></div>

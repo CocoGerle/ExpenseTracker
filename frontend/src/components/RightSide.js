@@ -21,24 +21,17 @@ import { Cards } from "./Cards";
 import { useState, useEffect, useContext } from "react";
 import { RecordContext } from "./utils/context";
 import * as IconsFa from "react-icons/fa";
-import { HomeIcon } from "@/assets/icons/HomeIcon";
 import { FoodIcon } from "@/assets/icons/FoodIcon";
+import { MdDeleteOutline } from "react-icons/md";
 
 export const RightSide = () => {
-  const {
-    record,
-    setRecord,
-    records,
-    setRecords,
-    type,
-    setType,
-    hiddenCategories,
-    toggleCategory,
-    category,
-    setCategory,
-    getData,
-  } = useContext(RecordContext);
+  const { records, setRecords, type, hiddenCategories, getData } =
+    useContext(RecordContext);
+
   const [filteredType, setFilteredType] = useState([]);
+  const [deleteRecordsArr, setDeleteRecordsArr] = useState([]);
+  const [checkedRecords, setCheckedRecords] = useState({});
+  const [selectAllChecked, setSelectAllChecked] = useState(false);
 
   useEffect(() => {
     getData();
@@ -56,6 +49,7 @@ export const RightSide = () => {
         .filter((record) => !hiddenCategories.includes(record.category.id))
     );
   };
+
   useEffect(() => {
     filterByType();
   }, [records, type, hiddenCategories]);
@@ -67,11 +61,58 @@ export const RightSide = () => {
     }, 0);
   };
 
-  const totalAmount = calculateTotalAmount(records);
+  const totalAmount = calculateTotalAmount(filteredType);
+
+  const deleteRecords = async (ids) => {
+    try {
+      await Promise.all(
+        ids.map((id) =>
+          axios.delete(`http://localhost:3001/records/${id}`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          })
+        )
+      );
+
+      setFilteredType((prevRecords) =>
+        prevRecords.filter((record) => !ids.includes(record.id))
+      );
+
+      setCheckedRecords((prevChecked) => {
+        const updatedChecked = { ...prevChecked };
+        ids.forEach((id) => {
+          delete updatedChecked[id];
+        });
+        return updatedChecked;
+      });
+
+      setDeleteRecordsArr([]); // Clear the deleteRecordsArr after deletion
+      setSelectAllChecked(false); // Reset Select All checkbox
+      console.log("Records deleted successfully");
+    } catch (error) {
+      console.error("Error deleting records:", error);
+    }
+  };
+
+  const handleCheckboxChange = (id, checked) => {
+    setCheckedRecords((prev) => ({ ...prev, [id]: checked }));
+    setDeleteRecordsArr((prev) => {
+      if (checked) {
+        return [...prev, id];
+      } else {
+        return prev.filter((recordId) => recordId !== id);
+      }
+    });
+  };
+
+  const handleSelectAllChange = (checked) => {
+    setSelectAllChecked(checked);
+  };
 
   return (
     <div>
-      <div className=" pt-[48px] pb-[16px] pl-[24px] flex justify-between ">
+      <div className="pt-[48px] pb-[16px] pl-[24px] flex justify-between">
         <div className="w-[160px] pl-[48px]">
           <Carousel>
             <CarouselContent>
@@ -96,13 +137,33 @@ export const RightSide = () => {
         </Select>
       </div>
 
-      <div className=" flex flex-col gap-6 pl-[24px]">
-        <div className="flex justify-between bg-white py-[12px] px-[24px] rounded-lg ">
-          <div className="flex gap-4 ">
+      <div className="flex flex-col gap-6 pl-[24px]">
+        <div className="flex justify-between bg-white py-[12px] px-[24px] rounded-lg">
+          <div className="flex gap-4">
             <div>
-              <Checkbox height={5} width={5} />
+              <Checkbox
+                height={5}
+                width={5}
+                // onCheckedChange={(checked) => {
+                //   setCheckedRecords((prev) => {
+                //     const allChecked = {};
+                //     filteredType.forEach((item) => {
+                //       allChecked[item.id] = checked;
+                //     });
+                //     return allChecked;
+                //   });
+
+                //   setDeleteRecordsArr(
+                //     checked ? filteredType.map((item) => item.id) : []
+                //   );
+                // }}
+
+                checked={selectAllChecked}
+                onCheckedChange={handleSelectAllChange}
+              />
+
+              <div>Select all</div>
             </div>
-            <div>Select all</div>
           </div>
           <div
             className={`text-md ${
@@ -112,19 +173,31 @@ export const RightSide = () => {
             {totalAmount}$
           </div>
         </div>
-        <div className="flex flex-col gap-3 ">
-          <div className="text-[16px] font-semibold">Today</div>
-          <div className="flex flex-col gap-3 ">
+
+        <div className="flex flex-col gap-3">
+          <div className="flex justify-between">
+            <div className="text-[16px] font-semibold">Today</div>
+            <div
+              className="flex items-center cursor-pointer"
+              onClick={() => {
+                deleteRecords(deleteRecordsArr);
+              }}
+            >
+              Delete <MdDeleteOutline color="red" size={24} />
+            </div>
+          </div>
+          <div className="flex flex-col gap-3">
             {filteredType.map((item) => {
               const Icon = IconsFa[item.category?.icon];
               return (
-                <div>
+                <div key={item.id}>
                   <Cards
                     type={item.type}
                     name={item.category.name}
                     amount={item.amount}
                     date={item.date}
                     time={item.time}
+                    id={item.id}
                     icon={
                       Icon ? (
                         <Icon color={item.category.color} size={24} />
@@ -132,15 +205,20 @@ export const RightSide = () => {
                         <FoodIcon />
                       )
                     }
-                  ></Cards>
+                    deleteRecordsArr={deleteRecordsArr}
+                    checked={checkedRecords[item.id] || false}
+                    onCheckedChange={(checked) =>
+                      handleCheckboxChange(item.id, checked)
+                    }
+                  />
                 </div>
               );
             })}
           </div>
         </div>
-        <div className="flex flex-col gap-3 ">
+        <div className="flex flex-col gap-3">
           <div className="text-[16px] font-semibold">Yesterday</div>
-          <div className="flex flex-col gap-3 "></div>
+          <div className="flex flex-col gap-3"></div>
         </div>
       </div>
     </div>

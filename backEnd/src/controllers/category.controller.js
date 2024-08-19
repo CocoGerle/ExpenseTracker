@@ -3,15 +3,19 @@ const path = require("path");
 const { v4 } = require("uuid");
 
 const getAllCategory = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     const filePath = path.join(__dirname, "..", "data", "category.json");
 
     const rawData = fs.readFileSync(filePath);
 
-    const accounts = JSON.parse(rawData);
+    const categories = JSON.parse(rawData);
 
-    res.json(accounts);
+    const userCategories = categories.filter(
+      (category) => category.userId === req.user.id
+    );
+
+    res.json(userCategories);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Interval Server Error" });
@@ -30,6 +34,7 @@ const createCategory = async (req, res) => {
     const newAccount = {
       ...req.body,
       id: v4(),
+      userId: req.user.id,
     };
 
     accounts.push(newAccount);

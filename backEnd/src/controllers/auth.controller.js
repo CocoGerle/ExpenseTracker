@@ -13,22 +13,16 @@ const login = async (req, res) => {
   );
 
   if (!user)
-    return res.status(400).json({ message: "Ene email burtgelgui bna" });
+    return res.status(401).json({ message: "Ene email burtgelgui bna" });
 
   const token = jwt.sign(
-    {
-      email: user.email,
-      id: user.id,
-    },
+    { name: user.name, email: user.email, id: user.id },
     process.env.JWT_SECRET
   );
 
   res.json({
     token,
-    user: {
-      email: user.email,
-      id: user.id,
-    },
+    user: { name: user.name, email: user.email, id: user.id },
   });
 };
 

@@ -18,7 +18,6 @@ export const RecordContextProvider = ({ children }) => {
       },
     });
     setRecords(response.data);
-    console.log(records);
   };
 
   const toggleCategory = (id) => {

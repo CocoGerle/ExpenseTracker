@@ -1,17 +1,22 @@
 const fs = require("fs");
 const path = require("path");
 const { v4 } = require("uuid");
+const { readJson, saveJson } = require("../utils");
 
 const getAllRecords = async (req, res) => {
   console.log(req.body);
   try {
-    const filePath = path.join(__dirname, "..", "data", "addRecord.json");
+    // const filePath = path.join(__dirname, "..", "data", "addRecord.json");
 
-    const rawData = fs.readFileSync(filePath);
+    // const rawData = fs.readFileSync(filePath);
 
-    const accounts = JSON.parse(rawData);
+    // const accounts = JSON.parse(rawData);
+    const records = await readJson("addRecord.json");
+    const userRecords = records.filter(
+      (record) => record.userId === req.user.id
+    );
 
-    res.json(accounts);
+    res.json(userRecords);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Interval Server Error" });
@@ -21,22 +26,26 @@ const getAllRecords = async (req, res) => {
 const createRecord = async (req, res) => {
   console.log(req.body);
   try {
-    const filePath = path.join(__dirname, "..", "data", "addRecord.json");
+    // const filePath = path.join(__dirname, "..", "data", "addRecord.json");
 
-    const rawData = fs.readFileSync(filePath);
+    // const rawData = fs.readFileSync(filePath);
 
-    const accounts = JSON.parse(rawData);
+    // const accounts = JSON.parse(rawData);
 
-    const newAccount = {
+    const records = await readJson("addRecord.json");
+
+    const newRecord = {
       ...req.body,
       id: v4(),
+      userId: req.user.id,
     };
 
-    accounts.push(newAccount);
+    records.push(newRecord);
 
-    fs.writeFileSync(filePath, JSON.stringify(accounts));
+    // fs.writeFileSync(filePath, JSON.stringify(records));
+    await saveJson("addRecord.json", records);
 
-    res.json(newAccount);
+    res.json(newRecord);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Interval Server Error" });

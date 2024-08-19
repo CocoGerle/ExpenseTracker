@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { useAuth } from "./utils/AuthProvider";
 
 export const NavBar = () => {
-  const { LogOut } = useAuth();
+  const { LogOut, user } = useAuth();
   return (
     <div className=" max-w-screen-2xl m-auto py-[16px] px-[120px] flex justify-between">
       <div className="flex items-center gap-[24px] text-[#0F172A] text-[16px]">
@@ -35,8 +35,9 @@ export const NavBar = () => {
           </div>
         </Link>
       </div>
-      <div className="flex gap-[24px]">
+      <div className="flex gap-[24px] items-center">
         <Button>+ Records</Button>
+        <div>Hi, {user.name}</div>
         <Link href={"/login"}>
           <div
             onClick={LogOut}
