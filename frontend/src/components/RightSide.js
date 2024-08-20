@@ -32,6 +32,7 @@ export const RightSide = () => {
   const [deleteRecordsArr, setDeleteRecordsArr] = useState([]);
   const [checkedRecords, setCheckedRecords] = useState({});
   const [selectAllChecked, setSelectAllChecked] = useState(false);
+  const [sortOrder, setSortOrder] = useState("Newest first");
 
   useEffect(() => {
     getData();
@@ -47,12 +48,35 @@ export const RightSide = () => {
           return false;
         })
         .filter((record) => !hiddenCategories.includes(record.category.id))
+        .sort((a, b) => {
+          if (sortOrder === "Newest first" || sortOrder === "Oldest first") {
+            const dateA = new Date(a.date || "1900-01-01");
+            const dateB = new Date(b.date || "1900-01-01");
+            if (sortOrder === "Newest first") {
+              return dateB - dateA;
+            } else {
+              return dateA - dateB;
+            }
+          } else if (
+            sortOrder === "Highest first" ||
+            sortOrder === "Lowest first"
+          ) {
+            const amountA = a.amount || 0;
+            const amountB = b.amount || 0;
+            if (sortOrder === "Highest first") {
+              return amountB - amountA;
+            } else {
+              return amountA - amountB;
+            }
+          }
+          return 0;
+        })
     );
   };
 
   useEffect(() => {
     filterByType();
-  }, [records, type, hiddenCategories]);
+  }, [records, type, hiddenCategories, sortOrder]);
 
   const calculateTotalAmount = (records) => {
     return records.reduce((total, record) => {
@@ -125,14 +149,15 @@ export const RightSide = () => {
           </Carousel>
         </div>
 
-        <Select>
+        <Select onValueChange={(value) => setSortOrder(value)}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Newest first" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="light">Newest first</SelectItem>
-            <SelectItem value="dark">Oldest first</SelectItem>
-            <SelectItem value="system">Si si ma</SelectItem>
+            <SelectItem value="Newest first">Newest first</SelectItem>
+            <SelectItem value="Oldest first">Oldest first</SelectItem>
+            <SelectItem value="Highest first">Highest first</SelectItem>
+            <SelectItem value="Lowest first">Lowest first</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -144,20 +169,6 @@ export const RightSide = () => {
               <Checkbox
                 height={5}
                 width={5}
-                // onCheckedChange={(checked) => {
-                //   setCheckedRecords((prev) => {
-                //     const allChecked = {};
-                //     filteredType.forEach((item) => {
-                //       allChecked[item.id] = checked;
-                //     });
-                //     return allChecked;
-                //   });
-
-                //   setDeleteRecordsArr(
-                //     checked ? filteredType.map((item) => item.id) : []
-                //   );
-                // }}
-
                 checked={selectAllChecked}
                 onCheckedChange={handleSelectAllChange}
               />

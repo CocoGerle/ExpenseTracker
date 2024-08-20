@@ -176,7 +176,7 @@ export const Records = () => {
                     <Input
                       className="text-gray-500"
                       type="number"
-                      placeholder="₮ 000.00"
+                      // placeholder="₮ 000.00"
                       onChange={(event) =>
                         setRecord({ ...record, amount: event.target.value })
                       }
