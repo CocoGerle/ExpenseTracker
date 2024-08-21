@@ -1,1 +1,30 @@
-[{"name":"hiiii","icon":"FaMugHot","color":"#41CC00","id":"bd5e9317-6c56-4181-9ae2-d7d75f34f705","userId":"be07cca3-ca51-4e04-adc3-4e0546363043"},{"name":"Zororogiin sororo","icon":"FaMugHot","color":"#F9D100","id":"80ea9750-0493-446d-8e68-3cdd97551711","userId":"f8cb320d-4453-45a9-b821-f45cda444458"},{"name":"gerlee","icon":"FaMugHot","color":"#F9D100","id":"702bb451-dc56-4d07-a028-63c2e24d7e07","userId":"68dce6eb-7237-442f-95f6-ee3316ca0433"},{"name":"style","icon":"FaTaxi","color":"#F9D100","id":"44f55ca5-c2d5-4f01-94c3-9864da848dad","userId":"f7adcb86-ab70-46ca-9ea5-cfec669a46c1"}]
+[
+  {
+    "name": "hiiii",
+    "icon": "FaMugHot",
+    "color": "#41CC00",
+    "id": "bd5e9317-6c56-4181-9ae2-d7d75f34f705",
+    "userId": "be07cca3-ca51-4e04-adc3-4e0546363043"
+  },
+  {
+    "name": "Zororogiin sororo",
+    "icon": "FaMugHot",
+    "color": "#F9D100",
+    "id": "80ea9750-0493-446d-8e68-3cdd97551711",
+    "userId": "f8cb320d-4453-45a9-b821-f45cda444458"
+  },
+  {
+    "name": "gerlee",
+    "icon": "FaMugHot",
+    "color": "#F9D100",
+    "id": "702bb451-dc56-4d07-a028-63c2e24d7e07",
+    "userId": "68dce6eb-7237-442f-95f6-ee3316ca0433"
+  },
+  {
+    "name": "style",
+    "icon": "FaTaxi",
+    "color": "#F9D100",
+    "id": "44f55ca5-c2d5-4f01-94c3-9864da848dad",
+    "userId": "f7adcb86-ab70-46ca-9ea5-cfec669a46c1"
+  }
+]

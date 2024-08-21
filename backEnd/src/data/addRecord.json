@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "type": "inc",
+    "amount": "77",
+    "category": {
+      "name": "style",
+      "icon": "FaTaxi",
+      "color": "#F9D100",
+      "id": "44f55ca5-c2d5-4f01-94c3-9864da848dad"
+    },
+    "date": "2024-08-02",
+    "time": "10:36",
+    "note": "tt",
+    "payee": "t",
+    "id": "f9b5192d-6e31-4a3f-9e56-5a8238f44767",
+    "userId": "f7adcb86-ab70-46ca-9ea5-cfec669a46c1"
+  },
+  {
+    "type": "exp",
+    "amount": "66",
+    "category": {
+      "name": "style",
+      "icon": "FaTaxi",
+      "color": "#F9D100",
+      "id": "44f55ca5-c2d5-4f01-94c3-9864da848dad"
+    },
+    "date": "2024-08-02",
+    "time": "10:36",
+    "note": "tt",
+    "payee": "t",
+    "id": "3a2be68f-de35-4c37-84da-5f86c407193b",
+    "userId": "f7adcb86-ab70-46ca-9ea5-cfec669a46c1"
+  }
+]

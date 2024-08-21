@@ -37,7 +37,7 @@ export const NavBar = () => {
       </div>
       <div className="flex gap-[24px] items-center">
         <Button>+ Records</Button>
-        <div>Hi, {user.name}</div>
+        {/* <div>Hi, {user.name}</div> */}
         <Link href={"/login"}>
           <div
             onClick={LogOut}
