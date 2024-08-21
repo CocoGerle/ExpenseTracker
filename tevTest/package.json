@@ -1,4 +1,15 @@
 {
+  "name": "tevtest",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "drizzle:generate": "drizzle-kit generate --config=drizzle.config.js",
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
   "type": "module",
   "dependencies": {
     "@neondatabase/serverless": "^0.9.4",
@@ -13,16 +24,5 @@
   "devDependencies": {
     "drizzle-kit": "^0.24.0",
     "nodemon": "^3.1.4"
-  },
-  "name": "tevtest",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "drizzle:generate": "drizzle-kit generate --config=drizzle.config.js",
-    "dev": "nodemon src/index.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  }
 }

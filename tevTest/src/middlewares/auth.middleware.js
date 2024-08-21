@@ -16,7 +16,7 @@ export const authMiddleware = (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
-    console.error("JWT verification error:", err); // Log the error for debugging
+    console.error("JWT verification error:", err);
     return res.status(401).json({ error: "Хүчинтэй бус токен!" });
   }
 };
