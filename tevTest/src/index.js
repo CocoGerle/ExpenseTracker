@@ -18,7 +18,7 @@ app.use(authMiddleware);
 
 app.use("/users", usersRouter);
 app.use("/records", recordsRouter);
-app.use("/categories", categoriesRouter);
+app.use("/category", categoriesRouter);
 app.use("/auth", authRouter);
 
 app.listen(3006, () => {

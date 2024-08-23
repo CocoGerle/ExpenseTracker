@@ -7,6 +7,8 @@ export const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
   const token = authHeader?.split(" ")[1];
 
+  console.log(token);
+
   if (!token) {
     return res.status(401).json({ error: "Нэвтрэх шаардлагатай байна!" });
   }
@@ -14,6 +16,8 @@ export const authMiddleware = (req, res, next) => {
   try {
     const user = jwt.verify(token, process.env.JWT_SECRET);
     req.user = user;
+    // console.log(req.user);
+
     next();
   } catch (err) {
     console.error("JWT verification error:", err);

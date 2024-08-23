@@ -15,7 +15,7 @@ export const Test = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await axios.get("http://localhost:3001/accounts");
+      const response = await axios.get("http://localhost:3006/accounts");
       setAccounts(response.data);
     };
     getData();
@@ -27,7 +27,7 @@ export const Test = () => {
       amount,
     };
     const response = await axios.post(
-      `http://localhost:3001/accounts`,
+      `http://localhost:3006/accounts`,
       newAccount
     );
 
@@ -35,12 +35,12 @@ export const Test = () => {
   };
 
   const deleteAccount = async (id) => {
-    const response = await axios.delete(`http://localhost:3001/accounts/${id}`);
+    const response = await axios.delete(`http://localhost:3006/accounts/${id}`);
     setAccounts(accounts.filter((item) => item.id !== id));
   };
 
   const deleteAllAccount = async () => {
-    const response = await axios.delete("http://localhost:3001/accounts");
+    const response = await axios.delete("http://localhost:3006/accounts");
     setAccounts([]);
     console.log(response.data);
   };

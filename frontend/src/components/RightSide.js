@@ -38,60 +38,61 @@ export const RightSide = () => {
     getData();
   }, []);
 
-  const filterByType = () => {
-    setFilteredType(
-      records
-        .filter((record) => {
-          if (type === "all") return true;
-          if (type === "inc" && record.type === "inc") return true;
-          if (type === "exp" && record.type === "exp") return true;
-          return false;
-        })
-        .filter((record) => !hiddenCategories.includes(record.category.id))
-        .sort((a, b) => {
-          if (sortOrder === "Newest first" || sortOrder === "Oldest first") {
-            const dateA = new Date(a.date || "1900-01-01");
-            const dateB = new Date(b.date || "1900-01-01");
-            if (sortOrder === "Newest first") {
-              return dateB - dateA;
-            } else {
-              return dateA - dateB;
-            }
-          } else if (
-            sortOrder === "Highest first" ||
-            sortOrder === "Lowest first"
-          ) {
-            const amountA = a.amount || 0;
-            const amountB = b.amount || 0;
-            if (sortOrder === "Highest first") {
-              return amountB - amountA;
-            } else {
-              return amountA - amountB;
-            }
-          }
-          return 0;
-        })
-    );
-  };
+  // const filterByType = () => {
+  //   setFilteredType(
+  //     records
+  //     // .filter((record) => {
+  //     //   if (type === "all") return true;
+  //     //   if (type === "inc" && record.type === "inc") return true;
+  //     //   if (type === "exp" && record.type === "exp") return true;
+  //     //   return false;
+  //     // })
+  //     // .filter((record) => !hiddenCategories.includes(record.category.id))
+  //     // .sort((a, b) => {
+  //     //   if (sortOrder === "Newest first" || sortOrder === "Oldest first") {
+  //     //     const dateA = new Date(a.date || "1900-01-01");
+  //     //     const dateB = new Date(b.date || "1900-01-01");
+  //     //     if (sortOrder === "Newest first") {
+  //     //       return dateB - dateA;
+  //     //     } else {
+  //     //       return dateA - dateB;
+  //     //     }
+  //     //   } else if (
+  //     //     sortOrder === "Highest first" ||
+  //     //     sortOrder === "Lowest first"
+  //     //   ) {
+  //     //     const amountA = a.amount || 0;
+  //     //     const amountB = b.amount || 0;
+  //     //     if (sortOrder === "Highest first") {
+  //     //       return amountB - amountA;
+  //     //     } else {
+  //     //       return amountA - amountB;
+  //     //     }
+  //     //   }
+  //     //   return 0;
+  //     // })
+  //   );
+  // };
+  console.log(filteredType);
 
-  useEffect(() => {
-    filterByType();
-  }, [records, type, hiddenCategories, sortOrder]);
+  // useEffect(() => {
+  //   filterByType();
+  // }, [records, type, hiddenCategories, sortOrder]);
 
-  const calculateTotalAmount = (records) => {
-    return records.reduce((total, record) => {
-      const amount = parseFloat(record.amount);
-      return total + (record.type === "exp" ? -amount : amount);
-    }, 0);
-  };
+  // const calculateTotalAmount = (records) => {
+  //   return records.reduce((total, record) => {
+  //     const amount = parseFloat(record.amount);
+  //     return total + (record.type === "exp" ? -amount : amount);
+  //   }, 0);
+  // };
 
-  const totalAmount = calculateTotalAmount(filteredType);
+  // const totalAmount = calculateTotalAmount(filteredType);
 
   const deleteRecords = async (ids) => {
     try {
       await Promise.all(
         ids.map((id) =>
-          axios.delete(`http://localhost:3001/records/${id}`, {
+          axios.delete(`http://localhost:3006/records/${id}`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
@@ -176,13 +177,13 @@ export const RightSide = () => {
               <div>Select all</div>
             </div>
           </div>
-          <div
+          {/* <div
             className={`text-md ${
               totalAmount > 0 ? "text-green-600" : "text-red-600"
             }`}
           >
             {totalAmount}$
-          </div>
+          </div> */}
         </div>
 
         <div className="flex flex-col gap-3">

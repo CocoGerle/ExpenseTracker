@@ -19,7 +19,7 @@ export const UpDateDialog = ({ id, setAccounts, amount, title }) => {
   const [amountx, setAmountx] = useState(amount);
 
   const updateAccount = async () => {
-    const response = await axios.put(`http://localhost:3001/accounts/${id}`, {
+    const response = await axios.put(`http://localhost:3006/accounts/${id}`, {
       id,
       amount: amountx,
       title: titlex,

@@ -82,7 +82,7 @@ export const Records = () => {
   };
 
   const createRecord = async () => {
-    const response = await axios.post(`http://localhost:3001/records`, record, {
+    const response = await axios.post(`http://localhost:3006/records`, record, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -96,7 +96,7 @@ export const Records = () => {
 
   const createCategory = async () => {
     const response = await axios.post(
-      `http://localhost:3001/category`,
+      `http://localhost:3006/category`,
       category,
       {
         headers: {
@@ -107,7 +107,7 @@ export const Records = () => {
     getData1();
   };
   const getData1 = async () => {
-    const response = await axios.get("http://localhost:3001/category", {
+    const response = await axios.get("http://localhost:3006/category", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -120,7 +120,7 @@ export const Records = () => {
 
   const deleteCategory = async (id) => {
     const response = await axios?.delete(
-      `http://localhost:3001/category/${id}`,
+      `http://localhost:3006/category/${id}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
