@@ -13,12 +13,20 @@ export const getRecords = async (req, res) => {
 };
 
 export const createRecords = async (req, res) => {
-  const { type, amount, categoryId, date, time, note, payee, userId } =
-    req.body;
+  const { type, amount, categoryId, date, time, note, payee } = req.body;
 
   const record = await db
     .insert(records)
-    .values({ type, amount, categoryId, date, time, note, payee, userId })
+    .values({
+      type,
+      amount,
+      categoryId,
+      date,
+      time,
+      note,
+      payee,
+      userId: req.user.id,
+    })
     .returning();
 
   res.json(record);
