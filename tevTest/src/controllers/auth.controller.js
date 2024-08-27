@@ -9,12 +9,13 @@ export const login = async (req, res) => {
     const user = await db.query.users.findFirst({
       where: and(eq(users.email, email), eq(users.password, password)),
     });
+    console.log(user);
 
     if (!user)
       return res.status(401).json({ message: "password emailee shalgana u" });
 
     const token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user.id, email: user.email, name: user.name },
       process.env.JWT_SECRET
     );
 

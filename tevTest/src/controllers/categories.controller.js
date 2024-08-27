@@ -22,3 +22,27 @@ export const createCategories = async (req, res) => {
 
   res.json(category);
 };
+
+export const deleteCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const existingCategory = await db.query.categories.findFirst({
+      where: eq(categories.id, id),
+    });
+
+    if (!existingCategory) {
+      return res.status(404).json({ error: "Category not found" });
+    }
+
+    await db.delete(categories).where(eq(categories.id, id));
+
+    res.json({
+      message: "Category successfully deleted",
+      deletedCategory: existingCategory,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};

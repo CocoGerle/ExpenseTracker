@@ -178,7 +178,10 @@ export const Records = () => {
                       type="number"
                       // placeholder="₮ 000.00"
                       onChange={(event) =>
-                        setRecord({ ...record, amount: event.target.value })
+                        setRecord({
+                          ...record,
+                          amount: Number(event.target.value),
+                        })
                       }
                     />
                   </div>
@@ -188,13 +191,7 @@ export const Records = () => {
                       onValueChange={(event) =>
                         setRecord({
                           ...record,
-                          category: {
-                            ...record.category,
-                            name: event.name,
-                            icon: event.icon,
-                            color: event.color,
-                            id: event.id,
-                          },
+                          categoryId: event.id,
                         })
                       }
                     >
@@ -345,7 +342,9 @@ export const Records = () => {
                   deleteCategory(item.id);
                 }}
               >
-                <MdDeleteOutline />
+                <div className="hover:text-red-600 cursor-pointer">
+                  <MdDeleteOutline />
+                </div>
               </div>
             </div>
           ))}

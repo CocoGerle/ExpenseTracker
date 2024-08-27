@@ -73,7 +73,7 @@ export const RightSide = () => {
         })
     );
   };
-  console.log(filteredType);
+  // console.log(filteredType);
 
   useEffect(() => {
     filterByType();
@@ -195,7 +195,10 @@ export const RightSide = () => {
                 deleteRecords(deleteRecordsArr);
               }}
             >
-              Delete <MdDeleteOutline color="red" size={24} />
+              Delete
+              <div className="hover:text-red-600 cursor-pointer">
+                <MdDeleteOutline size={24} />
+              </div>
             </div>
           </div>
           <div className="flex flex-col gap-3">
@@ -205,7 +208,7 @@ export const RightSide = () => {
                 <div key={item.id}>
                   <Cards
                     type={item.type}
-                    name={item.category}
+                    name={item.category?.name}
                     amount={item.amount}
                     date={item.date}
                     time={item.time}

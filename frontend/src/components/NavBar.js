@@ -36,8 +36,8 @@ export const NavBar = () => {
         </Link>
       </div>
       <div className="flex gap-[24px] items-center">
-        <Button>+ Records</Button>
-        {/* <div>Hi, {user.name}</div> */}
+        {/* <Button>+ Records</Button> */}
+        <div>Hi, {user.name.toUpperCase()}</div>
         <Link href={"/login"}>
           <div
             onClick={LogOut}
