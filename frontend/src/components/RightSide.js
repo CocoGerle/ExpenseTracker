@@ -24,6 +24,7 @@ import * as IconsFa from "react-icons/fa";
 import { FoodIcon } from "@/assets/icons/FoodIcon";
 import { MdDeleteOutline } from "react-icons/md";
 import { SearchBar } from "./SearchBar";
+import { isYesterday } from "date-fns";
 
 export const RightSide = () => {
   const {
@@ -44,6 +45,8 @@ export const RightSide = () => {
   const [sortOrder, setSortOrder] = useState("Newest first");
   const [filterSearchRecords, setFilterSearchRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [dateRecords, setDateRecords] = useState([]);
+  const [yesterday, setYesterday] = useState([]);
 
   useEffect(() => {
     getData();
@@ -53,8 +56,6 @@ export const RightSide = () => {
     setFilteredType(
       records
         .filter((record) => {
-          // console.log(record.amount, "===");
-
           if (type === "all") return true;
           if (type === "inc" && record.type === "inc") return true;
           if (type === "exp" && record.type === "exp") return true;
@@ -65,6 +66,7 @@ export const RightSide = () => {
         )
         .filter((record) => !hiddenCategories.includes(record.categoryId))
         .filter((record) => record.payee.includes(searchValue))
+        .filter((record) => currentDate === record.date)
         .sort((a, b) => {
           if (sortOrder === "Newest first" || sortOrder === "Oldest first") {
             const dateA = new Date(a.date || "1900-01-01");
@@ -90,10 +92,19 @@ export const RightSide = () => {
         })
     );
   };
-  // console.log(filteredType);
+  let currentDate = new Date().toJSON().slice(0, 10);
+  const hhh = () => {
+    setDateRecords(
+      records.filter(
+        (record) => currentDate !== record.date && !isYesterday(record.date)
+      )
+    );
+    setYesterday(records.filter((record) => isYesterday(record.date)));
+  };
 
   useEffect(() => {
     filterByType();
+    hhh();
   }, [
     records,
     type,
@@ -113,37 +124,37 @@ export const RightSide = () => {
 
   const totalAmount = calculateTotalAmount(filteredType);
 
-  const deleteRecords = async (ids) => {
-    try {
-      await Promise.all(
-        ids.map((id) =>
-          axios.delete(`http://localhost:3006/records/${id}`, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          })
-        )
-      );
+  // const deleteRecords = async (ids) => {
+  //   try {
+  //     await Promise.all(
+  //       ids.map((id) =>
+  //         axios.delete(`http://localhost:3006/records/${id}`, {
+  //           headers: {
+  //             Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //           },
+  //         })
+  //       )
+  //     );
 
-      setFilteredType((prevRecords) =>
-        prevRecords.filter((record) => !ids.includes(record.id))
-      );
+  //     setFilteredType((prevRecords) =>
+  //       prevRecords.filter((record) => !ids.includes(record.id))
+  //     );
 
-      setCheckedRecords((prevChecked) => {
-        const updatedChecked = { ...prevChecked };
-        ids.forEach((id) => {
-          delete updatedChecked[id];
-        });
-        return updatedChecked;
-      });
+  //     setCheckedRecords((prevChecked) => {
+  //       const updatedChecked = { ...prevChecked };
+  //       ids.forEach((id) => {
+  //         delete updatedChecked[id];
+  //       });
+  //       return updatedChecked;
+  //     });
 
-      setDeleteRecordsArr([]);
-      setSelectAllChecked(false);
-      console.log("Records deleted successfully");
-    } catch (error) {
-      console.error("Error deleting records:", error);
-    }
-  };
+  //     setDeleteRecordsArr([]);
+  //     setSelectAllChecked(false);
+  //     console.log("Records deleted successfully");
+  //   } catch (error) {
+  //     console.error("Error deleting records:", error);
+  //   }
+  // };
 
   const handleCheckboxChange = (id, checked) => {
     setCheckedRecords((prev) => ({ ...prev, [id]: checked }));
@@ -195,8 +206,8 @@ export const RightSide = () => {
               <Checkbox
                 height={5}
                 width={5}
-                checked={selectAllChecked}
-                onCheckedChange={handleSelectAllChange}
+                // checked={selectAllChecked}
+                // onCheckedChange={handleSelectAllChange}
               />
 
               <div>Select all</div>
@@ -212,13 +223,19 @@ export const RightSide = () => {
         </div>
 
         <div className="flex flex-col gap-3">
+          <SearchBar
+            filterSearchRecords={filterSearchRecords}
+            setFilterSearchRecords={setFilterSearchRecords}
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+          />
           <div className="flex justify-between">
             <div className="text-[16px] font-semibold">Today</div>
             <div
-              className="flex items-center cursor-pointer"
-              onClick={() => {
-                deleteRecords(deleteRecordsArr);
-              }}
+            // className="flex items-center cursor-pointer"
+            // onClick={() => {
+            //   deleteRecords(deleteRecordsArr);
+            // }}
             >
               Delete
               <div className="hover:text-red-600 cursor-pointer">
@@ -226,12 +243,7 @@ export const RightSide = () => {
               </div>
             </div>
           </div>
-          <SearchBar
-            filterSearchRecords={filterSearchRecords}
-            setFilterSearchRecords={setFilterSearchRecords}
-            searchValue={searchValue}
-            setSearchValue={setSearchValue}
-          />
+
           <div className="flex flex-col gap-3">
             {filteredType.map((item) => {
               const Icon = IconsFa[item.category?.icon];
@@ -265,6 +277,74 @@ export const RightSide = () => {
         </div>
         <div className="flex flex-col gap-3">
           <div className="text-[16px] font-semibold">Yesterday</div>
+          <div>
+            <div className="flex flex-col gap-3">
+              {yesterday.map((item) => {
+                const Icon = IconsFa[item.category?.icon];
+                return (
+                  <div key={item.id}>
+                    <Cards
+                      type={item.type}
+                      name={item.category?.name}
+                      amount={item.amount}
+                      date={item.date}
+                      time={item.time}
+                      payee={item.payee}
+                      id={item.id}
+                      icon={
+                        Icon ? (
+                          <Icon color={item.category.color} size={24} />
+                        ) : (
+                          <FoodIcon />
+                        )
+                      }
+                      deleteRecordsArr={deleteRecordsArr}
+                      checked={checkedRecords[item.id] || false}
+                      onCheckedChange={(checked) =>
+                        handleCheckboxChange(item.id, checked)
+                      }
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="flex flex-col gap-3"></div>
+        </div>
+        <div className="flex flex-col gap-3">
+          <div className="text-[16px] font-semibold">Others</div>
+          <div>
+            <div className="flex flex-col gap-3">
+              {dateRecords.map((item) => {
+                const Icon = IconsFa[item.category?.icon];
+                return (
+                  <div key={item.id}>
+                    <Cards
+                      type={item.type}
+                      name={item.category?.name}
+                      amount={item.amount}
+                      date={item.date}
+                      time={item.time}
+                      payee={item.payee}
+                      id={item.id}
+                      icon={
+                        Icon ? (
+                          <Icon color={item.category.color} size={24} />
+                        ) : (
+                          <FoodIcon />
+                        )
+                      }
+                      deleteRecordsArr={deleteRecordsArr}
+                      checked={checkedRecords[item.id] || false}
+                      onCheckedChange={(checked) =>
+                        handleCheckboxChange(item.id, checked)
+                      }
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
           <div className="flex flex-col gap-3"></div>
         </div>
       </div>

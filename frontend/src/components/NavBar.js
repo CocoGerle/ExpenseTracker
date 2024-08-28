@@ -44,9 +44,9 @@ export const NavBar = () => {
       </div>
       <div className="flex gap-[24px] items-center">
         <div className="flex flex-col items-center">
-          Hi, {user.name.toUpperCase()},{/* <Button>+ Records</Button> */}
+          Hi, {user.name?.toUpperCase()},{/* <Button>+ Records</Button> */}
           <button
-            className="cursor-pointer hover:text-pink-300"
+            className="cursor-pointer hover:text-red-500"
             onClick={handleClick}
           >
             Click me for flowers!

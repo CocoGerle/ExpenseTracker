@@ -6,7 +6,7 @@ const { createContext, useState, useEffect } = require("react");
 
 export const RecordContext = createContext(null);
 const minValue = 0;
-const maxValue = 1000;
+const maxValue = 1000000;
 export const RecordContextProvider = ({ children }) => {
   const [records, setRecords] = useState([]);
   const [type, setType] = useState("all");
@@ -73,7 +73,7 @@ export const RecordContextProvider = ({ children }) => {
         minValue1,
         maxValue1,
         minValue,
-        maxValue, 
+        maxValue,
       }}
     >
       {children}
