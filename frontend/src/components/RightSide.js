@@ -23,16 +23,27 @@ import { RecordContext } from "./utils/context";
 import * as IconsFa from "react-icons/fa";
 import { FoodIcon } from "@/assets/icons/FoodIcon";
 import { MdDeleteOutline } from "react-icons/md";
+import { SearchBar } from "./SearchBar";
 
 export const RightSide = () => {
-  const { records, setRecords, type, hiddenCategories, getData } =
-    useContext(RecordContext);
+  const {
+    records,
+    setRecords,
+    type,
+    hiddenCategories,
+    getData,
+    values,
+    maxValue1,
+    minValue1,
+  } = useContext(RecordContext);
 
   const [filteredType, setFilteredType] = useState([]);
   const [deleteRecordsArr, setDeleteRecordsArr] = useState([]);
   const [checkedRecords, setCheckedRecords] = useState({});
   const [selectAllChecked, setSelectAllChecked] = useState(false);
   const [sortOrder, setSortOrder] = useState("Newest first");
+  const [filterSearchRecords, setFilterSearchRecords] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     getData();
@@ -42,12 +53,18 @@ export const RightSide = () => {
     setFilteredType(
       records
         .filter((record) => {
+          // console.log(record.amount, "===");
+
           if (type === "all") return true;
           if (type === "inc" && record.type === "inc") return true;
           if (type === "exp" && record.type === "exp") return true;
           return false;
         })
+        .filter(
+          (record) => record.amount >= minValue1 && record.amount <= maxValue1
+        )
         .filter((record) => !hiddenCategories.includes(record.categoryId))
+        .filter((record) => record.payee.includes(searchValue))
         .sort((a, b) => {
           if (sortOrder === "Newest first" || sortOrder === "Oldest first") {
             const dateA = new Date(a.date || "1900-01-01");
@@ -77,7 +94,15 @@ export const RightSide = () => {
 
   useEffect(() => {
     filterByType();
-  }, [records, type, hiddenCategories, sortOrder]);
+  }, [
+    records,
+    type,
+    hiddenCategories,
+    sortOrder,
+    searchValue,
+    minValue1,
+    maxValue1,
+  ]);
 
   const calculateTotalAmount = (records) => {
     return records.reduce((total, record) => {
@@ -201,6 +226,12 @@ export const RightSide = () => {
               </div>
             </div>
           </div>
+          <SearchBar
+            filterSearchRecords={filterSearchRecords}
+            setFilterSearchRecords={setFilterSearchRecords}
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+          />
           <div className="flex flex-col gap-3">
             {filteredType.map((item) => {
               const Icon = IconsFa[item.category?.icon];
@@ -212,6 +243,7 @@ export const RightSide = () => {
                     amount={item.amount}
                     date={item.date}
                     time={item.time}
+                    payee={item.payee}
                     id={item.id}
                     icon={
                       Icon ? (

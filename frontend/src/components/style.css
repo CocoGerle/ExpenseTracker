@@ -1,0 +1,18 @@
+.flower {
+  position: absolute;
+  top: -50px;
+  width: 30px;
+  height: 30px;
+  background-image: url("/pink-cosmos.png");
+  background-size: cover;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}

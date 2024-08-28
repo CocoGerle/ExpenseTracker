@@ -9,6 +9,7 @@ export const Cards = ({
   amount,
   icon,
   type,
+  payee,
   id,
   deleteRecordsArr,
   isDeleted,
@@ -52,6 +53,7 @@ export const Cards = ({
             <div className="text-[12px] text-[#6B7280]">
               {date} {time}
             </div>
+            <div className="text-[12px] text-[#6B7280]">{payee}</div>
           </div>
         </div>
       </div>

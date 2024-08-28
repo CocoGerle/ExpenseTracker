@@ -27,6 +27,7 @@ import * as IconsFa from "react-icons/fa";
 import { FoodIcon } from "@/assets/icons/FoodIcon";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
+import { SearchBar } from "./SearchBar";
 
 const icons1 = [
   { icon: "FaHome" },
@@ -46,14 +47,10 @@ const colors = [
   { color: "#FF0101" },
 ];
 
-const minValue = 0;
-const maxValue = 1000;
-
 export const Records = () => {
-  const [values, setValues] = useState([minValue, maxValue]);
+  // const [values, setValues] = useState([minValue, maxValue]);
   const [activeButton, setActiveButton] = useState("expense");
   const [bgColor, setBgColor] = useState("black");
-
   const [categories, setCategories] = useState([]);
 
   const {
@@ -69,6 +66,10 @@ export const Records = () => {
     setHiddenCategories,
     toggleCategory,
     getData,
+    values,
+    setValues,
+    maxValue,
+    minValue,
   } = useContext(RecordContext);
 
   const handleInputChange = (index, newValue) => {
@@ -138,6 +139,7 @@ export const Records = () => {
           <DialogTrigger className="bg-blue-600 text-white rounded-xl py-2 px-4">
             + Add
           </DialogTrigger>
+
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Add Record</DialogTitle>
@@ -287,7 +289,14 @@ export const Records = () => {
           </DialogContent>
         </Dialog>
       </div>
-      <Input type="search" placeholder="Search" />
+      <div>
+        {/* <input
+          value={input}
+          onChange={(e) => handleChange(e.target.value)}
+          placeholder="search"
+          className="h-10 w-full rounded-xl p-3 border"
+        /> */}
+      </div>
       <div>
         <h1 className="mb-3 text-lg text-gray-800">Types</h1>
         <RadioGroup

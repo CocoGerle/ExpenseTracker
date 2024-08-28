@@ -5,11 +5,16 @@ import axios from "axios";
 const { createContext, useState, useEffect } = require("react");
 
 export const RecordContext = createContext(null);
-
+const minValue = 0;
+const maxValue = 1000;
 export const RecordContextProvider = ({ children }) => {
   const [records, setRecords] = useState([]);
   const [type, setType] = useState("all");
   const [hiddenCategories, setHiddenCategories] = useState([]);
+  const [values, setValues] = useState([minValue, maxValue]);
+
+  const minValue1 = values[0];
+  const maxValue1 = values[1];
 
   const getData = async () => {
     const response = await axios?.get("http://localhost:3006/records", {
@@ -63,6 +68,12 @@ export const RecordContextProvider = ({ children }) => {
         hiddenCategories,
         setHiddenCategories,
         getData,
+        setValues,
+        values,
+        minValue1,
+        maxValue1,
+        minValue,
+        maxValue, 
       }}
     >
       {children}
