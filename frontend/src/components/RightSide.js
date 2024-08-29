@@ -52,59 +52,59 @@ export const RightSide = () => {
     getData();
   }, []);
 
-  const filterByType = () => {
-    setFilteredType(
-      records
-        .filter((record) => {
-          if (type === "all") return true;
-          if (type === "inc" && record.type === "inc") return true;
-          if (type === "exp" && record.type === "exp") return true;
-          return false;
-        })
-        .filter(
-          (record) => record.amount >= minValue1 && record.amount <= maxValue1
-        )
-        .filter((record) => !hiddenCategories.includes(record.categoryId))
-        .filter((record) => record.payee.includes(searchValue))
-        .filter((record) => currentDate === record.date)
-        .sort((a, b) => {
-          if (sortOrder === "Newest first" || sortOrder === "Oldest first") {
-            const dateA = new Date(a.date || "1900-01-01");
-            const dateB = new Date(b.date || "1900-01-01");
-            if (sortOrder === "Newest first") {
-              return dateB - dateA;
-            } else {
-              return dateA - dateB;
-            }
-          } else if (
-            sortOrder === "Highest first" ||
-            sortOrder === "Lowest first"
-          ) {
-            const amountA = a.amount || 0;
-            const amountB = b.amount || 0;
-            if (sortOrder === "Highest first") {
-              return amountB - amountA;
-            } else {
-              return amountA - amountB;
-            }
-          }
-          return 0;
-        })
-    );
-  };
+  const a = records
+    .filter((record) => {
+      if (type === "all") return true;
+      if (type === "inc" && record.type === "inc") return true;
+      if (type === "exp" && record.type === "exp") return true;
+      return false;
+    })
+    .filter(
+      (record) => record.amount >= minValue1 && record.amount <= maxValue1
+    )
+    .filter((record) => !hiddenCategories.includes(record.categoryId))
+    .filter(
+      (record) =>
+        record.payee?.includes(searchValue) ||
+        record.amount?.toString().includes(searchValue) ||
+        record.category?.name?.toString().includes(searchValue)
+    )
+    .sort((a, b) => {
+      if (sortOrder === "Newest first" || sortOrder === "Oldest first") {
+        const dateA = new Date(a.date || "1900-01-01");
+        const dateB = new Date(b.date || "1900-01-01");
+        if (sortOrder === "Newest first") {
+          return dateB - dateA;
+        } else {
+          return dateA - dateB;
+        }
+      } else if (
+        sortOrder === "Highest first" ||
+        sortOrder === "Lowest first"
+      ) {
+        const amountA = a.amount || 0;
+        const amountB = b.amount || 0;
+        if (sortOrder === "Highest first") {
+          return amountB - amountA;
+        } else {
+          return amountA - amountB;
+        }
+      }
+      return 0;
+    });
   let currentDate = new Date().toJSON().slice(0, 10);
-  const hhh = () => {
+  const filterByType = () => {
+    setFilteredType(a);
     setDateRecords(
-      records.filter(
+      a.filter(
         (record) => currentDate !== record.date && !isYesterday(record.date)
       )
     );
-    setYesterday(records.filter((record) => isYesterday(record.date)));
+    setYesterday(a.filter((record) => isYesterday(record.date)));
   };
 
   useEffect(() => {
     filterByType();
-    hhh();
   }, [
     records,
     type,
@@ -124,37 +124,43 @@ export const RightSide = () => {
 
   const totalAmount = calculateTotalAmount(filteredType);
 
-  // const deleteRecords = async (ids) => {
-  //   try {
-  //     await Promise.all(
-  //       ids.map((id) =>
-  //         axios.delete(`http://localhost:3006/records/${id}`, {
-  //           headers: {
-  //             Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //           },
-  //         })
-  //       )
-  //     );
+  const deleteRecords = async (ids) => {
+    try {
+      await Promise.all(
+        ids.map((id) =>
+          axios.delete(`http://localhost:3006/records/${id}`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          })
+        )
+      );
 
-  //     setFilteredType((prevRecords) =>
-  //       prevRecords.filter((record) => !ids.includes(record.id))
-  //     );
+      setFilteredType((prevRecords) =>
+        prevRecords.filter((record) => !ids.includes(record.id))
+      );
+      setDateRecords((prevRecords) =>
+        prevRecords.filter((record) => !ids.includes(record.id))
+      );
+      setYesterday((prevRecords) =>
+        prevRecords.filter((record) => !ids.includes(record.id))
+      );
 
-  //     setCheckedRecords((prevChecked) => {
-  //       const updatedChecked = { ...prevChecked };
-  //       ids.forEach((id) => {
-  //         delete updatedChecked[id];
-  //       });
-  //       return updatedChecked;
-  //     });
+      setCheckedRecords((prevChecked) => {
+        const updatedChecked = { ...prevChecked };
+        ids.forEach((id) => {
+          delete updatedChecked[id];
+        });
+        return updatedChecked;
+      });
 
-  //     setDeleteRecordsArr([]);
-  //     setSelectAllChecked(false);
-  //     console.log("Records deleted successfully");
-  //   } catch (error) {
-  //     console.error("Error deleting records:", error);
-  //   }
-  // };
+      setDeleteRecordsArr([]);
+      setSelectAllChecked(false);
+      console.log("Records deleted successfully");
+    } catch (error) {
+      console.error("Error deleting records:", error);
+    }
+  };
 
   const handleCheckboxChange = (id, checked) => {
     setCheckedRecords((prev) => ({ ...prev, [id]: checked }));
@@ -165,10 +171,6 @@ export const RightSide = () => {
         return prev.filter((recordId) => recordId !== id);
       }
     });
-  };
-
-  const handleSelectAllChange = (checked) => {
-    setSelectAllChecked(checked);
   };
 
   return (
@@ -203,12 +205,7 @@ export const RightSide = () => {
         <div className="flex justify-between bg-white py-[12px] px-[24px] rounded-lg">
           <div className="flex gap-4">
             <div>
-              <Checkbox
-                height={5}
-                width={5}
-                // checked={selectAllChecked}
-                // onCheckedChange={handleSelectAllChange}
-              />
+              <Checkbox height={5} width={5} />
 
               <div>Select all</div>
             </div>
@@ -232,10 +229,10 @@ export const RightSide = () => {
           <div className="flex justify-between">
             <div className="text-[16px] font-semibold">Today</div>
             <div
-            // className="flex items-center cursor-pointer"
-            // onClick={() => {
-            //   deleteRecords(deleteRecordsArr);
-            // }}
+              className="flex items-center cursor-pointer"
+              onClick={() => {
+                deleteRecords(deleteRecordsArr);
+              }}
             >
               Delete
               <div className="hover:text-red-600 cursor-pointer">
@@ -245,34 +242,36 @@ export const RightSide = () => {
           </div>
 
           <div className="flex flex-col gap-3">
-            {filteredType.map((item) => {
-              const Icon = IconsFa[item.category?.icon];
-              return (
-                <div key={item.id}>
-                  <Cards
-                    type={item.type}
-                    name={item.category?.name}
-                    amount={item.amount}
-                    date={item.date}
-                    time={item.time}
-                    payee={item.payee}
-                    id={item.id}
-                    icon={
-                      Icon ? (
-                        <Icon color={item.category.color} size={24} />
-                      ) : (
-                        <FoodIcon />
-                      )
-                    }
-                    deleteRecordsArr={deleteRecordsArr}
-                    checked={checkedRecords[item.id] || false}
-                    onCheckedChange={(checked) =>
-                      handleCheckboxChange(item.id, checked)
-                    }
-                  />
-                </div>
-              );
-            })}
+            {filteredType
+              .filter((kk) => kk.date === currentDate)
+              .map((item) => {
+                const Icon = IconsFa[item.category?.icon];
+                return (
+                  <div key={item.id}>
+                    <Cards
+                      type={item.type}
+                      name={item.category?.name}
+                      amount={item.amount}
+                      date={item.date}
+                      time={item.time}
+                      payee={item.payee}
+                      id={item.id}
+                      icon={
+                        Icon ? (
+                          <Icon color={item.category.color} size={24} />
+                        ) : (
+                          <FoodIcon />
+                        )
+                      }
+                      deleteRecordsArr={deleteRecordsArr}
+                      checked={checkedRecords[item.id] || false}
+                      onCheckedChange={(checked) =>
+                        handleCheckboxChange(item.id, checked)
+                      }
+                    />
+                  </div>
+                );
+              })}
           </div>
         </div>
         <div className="flex flex-col gap-3">
