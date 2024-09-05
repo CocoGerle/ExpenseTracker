@@ -198,7 +198,11 @@ export const Records = () => {
                         {categories.map((item, index) => {
                           const Icon = IconsFa[item.icon];
                           return (
-                            <SelectItem className="w-full p-0" value={item}>
+                            <SelectItem
+                              key={index}
+                              className="w-full p-0"
+                              value={item}
+                            >
                               <div className="flex gap-3 p-[16px]">
                                 {Icon ? (
                                   <Icon color={item.color} size={24} />
@@ -372,7 +376,11 @@ export const Records = () => {
                         {icons1.map((item, index) => {
                           const Icon = IconsFa[item.icon];
                           return (
-                            <SelectItem className="w-fit p-0" value={item.icon}>
+                            <SelectItem
+                              key={index}
+                              className="w-fit p-0"
+                              value={item.icon}
+                            >
                               <div value={item}>
                                 <Icon color={bgColor} size={24} />
                               </div>

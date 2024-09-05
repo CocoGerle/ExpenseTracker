@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { useContext, useState } from "react";
 import { useAuth } from "./utils/AuthProvider";
-import Flower from "./FLower";
+import Flower from "./Flower";
 import "./style.css";
 
 export const NavBar = () => {

@@ -52,7 +52,7 @@ const Login = () => {
         </button>
 
         <div className="flex gap-4">
-          <p>Don't have account?</p>
+          <p>Dont have account?</p>
           <Link href={"/register"}>
             <p className="text-[#0166FF]">Sign Up</p>
           </Link>
