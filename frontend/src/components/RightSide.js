@@ -25,6 +25,7 @@ import { FoodIcon } from "@/assets/icons/FoodIcon";
 import { MdDeleteOutline } from "react-icons/md";
 import { SearchBar } from "./SearchBar";
 import { isYesterday } from "date-fns";
+import { api } from "./lib/axios";
 
 export const RightSide = () => {
   const {
@@ -128,7 +129,7 @@ export const RightSide = () => {
     try {
       await Promise.all(
         ids.map((id) =>
-          axios.delete(`http://localhost:3006/records/${id}`, {
+          api.delete(`/records/${id}`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },

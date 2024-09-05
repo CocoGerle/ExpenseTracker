@@ -13,13 +13,14 @@ import { Label } from "@/components/ui/label";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { api } from "./lib/axios";
 
 export const UpDateDialog = ({ id, setAccounts, amount, title }) => {
   const [titlex, setTitlex] = useState(title);
   const [amountx, setAmountx] = useState(amount);
 
   const updateAccount = async () => {
-    const response = await axios.put(`http://localhost:3006/accounts/${id}`, {
+    const response = await api.put(`/accounts/${id}`, {
       id,
       amount: amountx,
       title: titlex,

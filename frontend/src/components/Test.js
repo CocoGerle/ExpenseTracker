@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { UserContext } from "./utils/context";
 import { UpDateDialog } from "./UpdateDialog";
+import { api } from "./lib/axios";
 
 export const Test = () => {
   const [accounts, setAccounts] = useState([]);
@@ -15,7 +16,7 @@ export const Test = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await axios.get("http://localhost:3006/accounts");
+      const response = await api.get("/accounts");
       setAccounts(response.data);
     };
     getData();
@@ -26,21 +27,18 @@ export const Test = () => {
       title,
       amount,
     };
-    const response = await axios.post(
-      `http://localhost:3006/accounts`,
-      newAccount
-    );
+    const response = await api.post(`/accounts`, newAccount);
 
     setAccounts([...accounts, response.data]);
   };
 
   const deleteAccount = async (id) => {
-    const response = await axios.delete(`http://localhost:3006/accounts/${id}`);
+    const response = await api.delete(`/accounts/${id}`);
     setAccounts(accounts.filter((item) => item.id !== id));
   };
 
   const deleteAllAccount = async () => {
-    const response = await axios.delete("http://localhost:3006/accounts");
+    const response = await api.delete("/accounts");
     setAccounts([]);
     console.log(response.data);
   };

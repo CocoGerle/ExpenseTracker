@@ -28,6 +28,7 @@ import { FoodIcon } from "@/assets/icons/FoodIcon";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
 import { SearchBar } from "./SearchBar";
+import { api } from "./lib/axios";
 
 const icons1 = [
   { icon: "FaHome" },
@@ -83,7 +84,7 @@ export const Records = () => {
   };
 
   const createRecord = async () => {
-    const response = await axios.post(`http://localhost:3006/records`, record, {
+    const response = await api.post(`/records`, record, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -96,19 +97,15 @@ export const Records = () => {
   }, []);
 
   const createCategory = async () => {
-    const response = await axios.post(
-      `http://localhost:3006/category`,
-      category,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    const response = await api.post(`/category`, category, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     getData1();
   };
   const getData1 = async () => {
-    const response = await axios.get("http://localhost:3006/category", {
+    const response = await api.get("/category", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -120,14 +117,11 @@ export const Records = () => {
   }, []);
 
   const deleteCategory = async (id) => {
-    const response = await axios?.delete(
-      `http://localhost:3006/category/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    const response = await api.delete(`/category/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     setCategories(categories.filter((category) => category.id !== id));
   };
 

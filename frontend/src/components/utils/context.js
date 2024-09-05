@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import { api } from "../lib/axios";
 
 const { createContext, useState, useEffect } = require("react");
 
@@ -17,7 +18,7 @@ export const RecordContextProvider = ({ children }) => {
   const maxValue1 = values[1];
 
   const getData = async () => {
-    const response = await axios?.get("http://localhost:3006/records", {
+    const response = await api?.get("/records", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

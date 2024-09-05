@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { api } from "./lib/axios";
 
 export const SearchBar = ({
   filterSearchRecords,
@@ -8,8 +9,8 @@ export const SearchBar = ({
   setSearchValue,
 }) => {
   useEffect(() => {
-    axios
-      ?.get("http://localhost:3006/records", {
+    api
+      ?.get("/records", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

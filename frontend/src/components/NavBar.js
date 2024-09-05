@@ -20,7 +20,7 @@ export const NavBar = () => {
         <div className="w-[40px] h-[40px]">
           <img src="/Logo.png" />
         </div>
-        <Link target="blank" href={"/dashboard"}>
+        {/* <Link target="blank" href={"/dashboard"}>
           <div
             className="text-black"
             style={{
@@ -29,7 +29,7 @@ export const NavBar = () => {
           >
             Dashboard
           </div>
-        </Link>
+        </Link> */}
 
         <Link target="blank" href={"/"}>
           <div
